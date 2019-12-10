@@ -5,7 +5,9 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path"
 
+	"github.com/axetroy/dvm/internal/fs"
 	"github.com/cheggaaa/pb/v3"
 	"github.com/pkg/errors"
 )
@@ -25,6 +27,10 @@ func DownloadFile(filepath string, url string) error {
 
 	if response.StatusCode >= http.StatusBadRequest {
 		return errors.New(fmt.Sprintf("download file with status code %d", response.StatusCode))
+	}
+
+	if err := fs.EnsureDir(path.Dir(filepath)); err != nil {
+		return errors.Wrapf(err, "ensure `%s` fail", path.Dir(filepath))
 	}
 
 	// Create the file
