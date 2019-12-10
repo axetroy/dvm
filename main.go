@@ -43,11 +43,11 @@ VERSION:
     {{.Version}}
     {{end}}
 EXAMPLES:
-    dvm install v0.26.0
-    dvm use v0.26.0
-    dvm uninstall v0.26.0
-    dvm ls
-    dvm ls-remote
+    {{.Name}} install v0.26.0
+    {{.Name}} use v0.26.0
+    {{.Name}} uninstall v0.26.0
+    {{.Name}} ls
+    {{.Name}} ls-remote
 
 SOURCE CODE:
     https://github.com/axetroy/dvm
