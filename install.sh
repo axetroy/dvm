@@ -3,7 +3,7 @@ set -e
 
 downloadFolder="${HOME}/Downloads"
 
-mkdir -p downloadFolder
+mkdir -p ${downloadFolder}
 
 get_arch() {
     a=$(uname -m)
