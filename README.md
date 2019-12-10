@@ -2,15 +2,22 @@
 
 ## dvm
 
-version manger for Deno
+Version Manger for Deno
+
+> Due to Deno's historical reasons, dvm does not support older Deno versions. 
+> eg `deno --version` is an invalid command in older versions
 
 Features:
 
 - [x] Cross platform support
 - [x] Easy to use
 - [x] No runtime dependencies (This is why it is not written in nodejs)
+- [x] Zero configuration
+- [x] Fully compatible with installed Deno
 
 ### Usage
+
+Whether you install Deno now or not will not affect the use of dvm.
 
 ```bash
 # install
@@ -77,6 +84,16 @@ run the following command to uninstall `dvm` or remove `dvm` executable file and
 
 ```shell
 $ dvm destroy
+```
+
+### Build from source code
+
+Make sure you have `Golang@v1.13.1` installed.
+
+```shell
+$ git clone https://github.com/axetroy/dvm.git $GOPATH/src/github.com/axetroy/dvm
+$ cd $GOPATH/src/github.com/axetroy/dvm
+$ make build
 ```
 
 ### Test
