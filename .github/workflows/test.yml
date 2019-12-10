@@ -33,9 +33,9 @@ jobs:
           bash build.sh
 
       # after success
-      - name: Coverage
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          go get golang.org/x/tools/cmd/cover
-          go get github.com/mattn/goveralls
-          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}
+#      - name: Coverage
+#        if: startsWith(matrix.os, 'ubuntu')
+#        run: |
+#          go get golang.org/x/tools/cmd/cover
+#          go get github.com/mattn/goveralls
+#          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}
