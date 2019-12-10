@@ -24,11 +24,24 @@ func Destroy() error {
 		return nil
 	}
 
+	//remove $HOME/.dvm
 	if err := os.RemoveAll(core.RootDir); err != nil {
 		return err
 	}
 
+	// remove $HOME/.deno
 	if err := os.RemoveAll(path.Dir(core.DenoDownloadDir)); err != nil {
+		return err
+	}
+
+	dvmFilepath, err := os.Executable()
+
+	if err != nil {
+		return err
+	}
+
+	// remove dvm executable file
+	if err := os.Remove(dvmFilepath); err != nil {
 		return err
 	}
 
