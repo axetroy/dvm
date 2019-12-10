@@ -12,7 +12,7 @@ Version Manger for Deno
 > eg `deno --version` is an invalid command in older versions
 >
 > NOTE: If you are using [justjavac/dvm](https://github.com/justjavac/dvm). They may conflict.
-> Because both tools use the $ `HOME/.dvm` directory
+> Because both tools use the `$HOME/.dvm` directory
 
 Features:
 
