@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/axetroy/s4/workflows/test/badge.svg)](https://github.com/axetroy/s4/actions)
+[![Build Status](https://github.com/axetroy/dvm/workflows/test/badge.svg)](https://github.com/axetroy/dvm/actions)
 
 ## dvm
 
@@ -8,7 +8,7 @@ Features:
 
 - [x] Cross platform support
 - [x] Easy to use
-- [x] No runtime dependencies
+- [x] No runtime dependencies (This is why it is not written in nodejs)
 
 ### Usage
 
