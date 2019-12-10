@@ -1,4 +1,8 @@
 [![Build Status](https://github.com/axetroy/dvm/workflows/test/badge.svg)](https://github.com/axetroy/dvm/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/axetroy/dvm)](https://goreportcard.com/report/github.com/axetroy/dvm)
+![Latest Version](https://img.shields.io/github/v/release/axetroy/dvm.svg)
+![License](https://img.shields.io/github/license/axetroy/dvm.svg)
+![Repo Size](https://img.shields.io/github/repo-size/axetroy/dvm.svg)
 
 ## dvm
 
