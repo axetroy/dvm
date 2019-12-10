@@ -2,12 +2,12 @@ package util
 
 import (
 	"fmt"
-
-	"github.com/cheggaaa/pb/v3"
-	"github.com/pkg/errors"
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/cheggaaa/pb/v3"
+	"github.com/pkg/errors"
 )
 
 // Download file from URL to the filepath

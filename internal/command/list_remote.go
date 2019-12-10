@@ -58,7 +58,8 @@ func ListRemote() error {
 	currentDenoVersion, err := deno.GetCurrentUseVersion()
 
 	if err != nil {
-		return err
+		// TODO: ignore error, remote this line in the future
+		// return err
 	}
 
 	for i, v := range versions {

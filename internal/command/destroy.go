@@ -7,6 +7,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/axetroy/dvm/internal/core"
+	"github.com/pkg/errors"
 )
 
 func Destroy() error {
@@ -26,23 +27,23 @@ func Destroy() error {
 
 	//remove $HOME/.dvm
 	if err := os.RemoveAll(core.RootDir); err != nil {
-		return err
+		return errors.Wrap(err, "remove `$HOME/.dvm` fail")
 	}
 
 	// remove $HOME/.deno
-	if err := os.RemoveAll(path.Dir(core.DenoDownloadDir)); err != nil {
-		return err
+	if err := os.RemoveAll(path.Dir(core.DenoBinDir)); err != nil {
+		return errors.Wrap(err, "remove `$HOME/.deno` fail")
 	}
 
 	dvmFilepath, err := os.Executable()
 
 	if err != nil {
-		return err
+		return errors.Wrap(err, "get dvm executable filepath fail")
 	}
 
 	// remove dvm executable file
 	if err := os.Remove(dvmFilepath); err != nil {
-		return err
+		return errors.Wrap(err, "remove dvm executable filepath fail")
 	}
 
 	fmt.Println("Uninstall successfully! see u.")

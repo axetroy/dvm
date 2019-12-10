@@ -1,36 +1,41 @@
 package deno
 
 import (
-	"bytes"
 	"os/exec"
-	"path"
 	"strings"
 
-	"github.com/axetroy/dvm/internal/core"
-	"github.com/axetroy/dvm/internal/fs"
+	"github.com/pkg/errors"
 )
 
-func GetCurrentUseVersion() (*string, error) {
-	denoFilepath := path.Join(core.DenoDownloadDir, core.ExecutableFilename)
+func IsHaveDenoInstall() (string, bool) {
+	if denoPath, err := exec.LookPath("deno"); err != nil {
+		return "", false
+	} else {
+		return denoPath, strings.TrimSpace(denoPath) != ""
+	}
+}
 
-	if exist, err := fs.PathExists(denoFilepath); err != nil {
-		return nil, err
-	} else if !exist {
+func GetCurrentUseVersion() (*string, error) {
+	denoFilepath, ok := IsHaveDenoInstall()
+
+	if !ok {
 		return nil, nil
 	}
 
-	var stdout bytes.Buffer
-	cmd := exec.Command(denoFilepath, []string{"--version"}...)
+	args := []string{"--version"}
+	cmd := exec.Command(denoFilepath, args...)
 
-	cmd.Stdout = &stdout
+	output, err := cmd.CombinedOutput()
 
-	if err := cmd.Run(); err != nil {
-		return nil, err
+	if err != nil {
+		return nil, errors.Wrapf(err, "`deno --version` failed\n%s", string(output))
 	}
 
-	output := stdout.String()
+	if cmd.ProcessState.ExitCode() != 0 {
+		return nil, errors.New(string(output))
+	}
 
-	arr := strings.Split(strings.Split(output, "\n")[0], " ")
+	arr := strings.Split(strings.Split(string(output), "\n")[0], " ")
 
 	version := strings.TrimSpace("v" + strings.TrimSpace(arr[1]))
 

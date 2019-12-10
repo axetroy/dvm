@@ -1,10 +1,11 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/axetroy/dvm/internal/command"
+	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )
 
@@ -43,15 +44,6 @@ VERSION:
 SOURCE CODE:
 	https://github.com/axetroy/dvm
 `
-
-	app.Flags = []cli.Flag{
-		&cli.StringFlag{
-			Name:    "config",
-			Aliases: []string{"c"},
-			Usage:   "specify the s4 configuration file.",
-			Value:   ".s4", // default value
-		},
-	}
 
 	app.Commands = []*cli.Command{
 		{
@@ -114,7 +106,7 @@ SOURCE CODE:
 				_, err := os.Stdout.Write([]byte(app.Version))
 
 				if err != nil {
-					return err
+					return errors.Wrap(err, "write to stdout fail")
 				}
 
 				return nil
@@ -141,6 +133,7 @@ SOURCE CODE:
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+		fmt.Printf("%+v\n", err)
+		os.Exit(1)
 	}
 }

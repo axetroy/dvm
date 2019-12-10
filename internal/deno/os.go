@@ -17,7 +17,7 @@ func GetDenoOS() (*string, error) {
 		denoOS = "linux"
 		break
 	case "windows":
-		denoOS = "windows"
+		denoOS = "win"
 		break
 	default:
 		return nil, errors.New("not support your platform")

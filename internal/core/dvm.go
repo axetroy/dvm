@@ -15,7 +15,7 @@ var (
 	CacheDir           string
 	ReleaseDir         string
 	ExecutableFilename string
-	DenoDownloadDir    string
+	DenoBinDir         string
 )
 
 func init() {
@@ -40,11 +40,11 @@ func init() {
 		HomeDir = h
 	}
 
-	DenoDownloadDir = path.Join(HomeDir, ".deno", "bin")
+	DenoBinDir = path.Join(HomeDir, ".deno", "bin")
 	RootDir = path.Join(HomeDir, ".dvm")
 	ReleaseDir = path.Join(RootDir, "releases")
 
-	if e := fs.EnsureDir(DenoDownloadDir); e != nil {
+	if e := fs.EnsureDir(DenoBinDir); e != nil {
 		err = e
 		return
 	}

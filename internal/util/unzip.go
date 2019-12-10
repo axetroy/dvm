@@ -41,6 +41,8 @@ func DecompressZip(tarFile, dest string) (*string, error) {
 		return nil, err
 	}
 
+	defer dst.Close()
+
 	if _, err := io.Copy(dst, src); err != nil {
 		return nil, err
 	}
