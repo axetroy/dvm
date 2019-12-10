@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/signal"
 	"path"
-	"syscall"
 
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/deno"
@@ -30,7 +29,7 @@ func Install(version string) error {
 	cacheFilepath := path.Join(core.CacheDir, *filename)
 
 	quitAndCleanCache := make(chan os.Signal)
-	signal.Notify(quitAndCleanCache, os.Kill, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	signal.Notify(quitAndCleanCache, util.GetAbortSignals()...)
 
 	go func() {
 		<-quitAndCleanCache
@@ -58,7 +57,7 @@ func Install(version string) error {
 	}
 
 	quitAndCleanWorkspace := make(chan os.Signal)
-	signal.Notify(quitAndCleanWorkspace, os.Kill, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	signal.Notify(quitAndCleanWorkspace, util.GetAbortSignals()...)
 
 	go func() {
 		<-quitAndCleanWorkspace

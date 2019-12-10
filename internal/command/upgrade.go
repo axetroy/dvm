@@ -13,7 +13,6 @@ import (
 	"os/signal"
 	"path"
 	"runtime"
-	"syscall"
 
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/util"
@@ -107,7 +106,7 @@ func Upgrade(version string, force bool) error {
 	defer os.RemoveAll(core.CacheDir)
 
 	quit := make(chan os.Signal)
-	signal.Notify(quit, os.Kill, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	signal.Notify(quit, util.GetAbortSignals()...)
 
 	go func() {
 		<-quit
