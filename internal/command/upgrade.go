@@ -152,12 +152,16 @@ func decompress(tarFile, dest string) error {
 		}
 
 		if err := file.Chmod(os.FileMode(hdr.Mode)); err != nil {
+			_ = file.Close()
 			return err
 		}
 
 		if _, err := io.Copy(file, tr); err != nil {
+			_ = file.Close()
 			return err
 		}
+
+		_ = file.Close()
 	}
 	return nil
 }
