@@ -33,6 +33,17 @@ $ dvm --help
 
 ### Installation
 
+If you are using Linux/MacOS. you can install it with following command:
+
+```shell
+# install latest version
+wget -qO- https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
+# or install specified version
+wget -qO- https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v0.1.0
+```
+
+Or
+
 Download the executable file for your platform at [release page](https://github.com/axetroy/dvm/releases)
 
 Then set the environment variable.
