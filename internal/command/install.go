@@ -2,7 +2,6 @@ package command
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/signal"
 	"path"
@@ -14,27 +13,6 @@ import (
 	"github.com/axetroy/dvm/internal/util"
 	"github.com/pkg/errors"
 )
-
-func isHaveInstall(version string) (bool, error) {
-	files, err := ioutil.ReadDir(core.ReleaseDir)
-
-	if err != nil {
-		return false, errors.Wrapf(err, "read dir `%s` fail", core.ReleaseDir)
-	}
-
-	for _, f := range files {
-		if version == f.Name() && f.IsDir() {
-			denoFilepath := path.Join(core.ReleaseDir, f.Name(), core.ExecutableFilename)
-			if isExist, err := fs.PathExists(denoFilepath); err != nil {
-				return false, errors.Wrapf(err, "detect path `%s` exist fail", denoFilepath)
-			} else if isExist {
-				return true, nil
-			}
-		}
-	}
-
-	return false, nil
-}
 
 func Install(version string) error {
 	filename, err := deno.GetRemoteTarFilename()
