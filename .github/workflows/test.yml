@@ -1,0 +1,41 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        go: ['1.13.1']
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    name: Go ${{ matrix.go }} test in ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Environment
+        run: |
+          go version
+          go env
+
+      - name: Test
+        run: make test
+
+      - name: Build
+        run: |
+          bash build.sh
+
+      # after success
+      - name: Coverage
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          go get golang.org/x/tools/cmd/cover
+          go get github.com/mattn/goveralls
+          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}

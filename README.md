@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/axetroy/s4/workflows/test/badge.svg)](https://github.com/axetroy/s4/actions)
+
 ## dvm
 
 version manger for Deno
