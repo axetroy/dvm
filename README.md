@@ -10,6 +10,9 @@ Version Manger for Deno
 
 > Due to Deno's historical reasons, dvm does not support older Deno versions. 
 > eg `deno --version` is an invalid command in older versions
+>
+> NOTE: If you are using [justjavac/dvm](https://github.com/justjavac/dvm). They may conflict.
+> Because both tools use the $ `HOME/.dvm` directory
 
 Features:
 
@@ -106,6 +109,10 @@ $ make build
 ```bash
 $ make test
 ```
+
+### Related
+
+[justjavac/dvm](https://github.com/justjavac/dvm) nodejs  version
 
 ### License
 
