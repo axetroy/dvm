@@ -30,8 +30,10 @@ func Use(version string) error {
 			oldDenoFilepath := path.Join(core.DenoBinDir, core.ExecutableFilename)
 
 			// remove it before anyway
-			if err := os.Remove(oldDenoFilepath); !os.IsNotExist(err) {
-				return errors.Wrapf(err, "remove `%s` fail", oldDenoFilepath)
+			if err := os.Remove(oldDenoFilepath); err != nil {
+				if !os.IsNotExist(err) {
+					return errors.Wrapf(err, "remove `%s` fail", oldDenoFilepath)
+				}
 			}
 
 			p := path.Join(core.ReleaseDir, v, core.ExecutableFilename)
@@ -40,8 +42,7 @@ func Use(version string) error {
 				// Windows requires permission for soft link
 				// Use copy as fallback
 				if runtime.GOOS == "windows" {
-					err = nil
-					if err := fs.Copy(oldDenoFilepath, p); err != nil {
+					if err = fs.Copy(oldDenoFilepath, p); err != nil {
 						return errors.Wrapf(err, "copy `%s` to `%s` fail", p, oldDenoFilepath)
 					}
 				} else {
