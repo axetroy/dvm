@@ -21,7 +21,7 @@ Features:
 
 ### Usage
 
-Whether you install Deno now or not will not affect the use of dvm.
+Whether you have installed Deno or not will not affect the use of dvm.
 
 ```bash
 # install
@@ -103,7 +103,7 @@ $ make build
 ### Test
 
 ```bash
-make test
+$ make test
 ```
 
 ### License
