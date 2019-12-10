@@ -23,26 +23,26 @@ func main() {
 	}
 
 	cli.AppHelpTemplate = `NAME:
-   {{.Name}} - {{.Usage}}
+    {{.Name}} - {{.Usage}}
 USAGE:
-   {{.HelpName}} {{if .VisibleFlags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
-   {{if len .Authors}}
+    {{.HelpName}} {{if .VisibleFlags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+    {{if len .Authors}}
 AUTHOR:
-   {{range .Authors}}{{ . }}{{end}}
-   {{end}}{{if .Commands}}
+    {{range .Authors}}{{ . }}{{end}}
+    {{end}}{{if .Commands}}
 COMMANDS:
-{{range .Commands}}{{if not .HideHelp}}   {{join .Names ", "}}{{ "\t"}}{{.Usage}}{{ "\n" }}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
+{{range .Commands}}{{if not .HideHelp}}   {{join .Names ", "}} {{ .ArgsUsage }}{{ "\t"}}{{.Usage}}{{ "\n" }}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
 GLOBAL OPTIONS:
-   {{range .VisibleFlags}}{{.}}
-   {{end}}{{end}}{{if .Copyright }}
+    {{range .VisibleFlags}}{{.}}
+    {{end}}{{end}}{{if .Copyright }}
 COPYRIGHT:
-   {{.Copyright}}
-   {{end}}{{if .Version}}
+    {{.Copyright}}
+    {{end}}{{if .Version}}
 VERSION:
-   {{.Version}}
-   {{end}}
+    {{.Version}}
+    {{end}}
 SOURCE CODE:
-	https://github.com/axetroy/dvm
+    https://github.com/axetroy/dvm
 `
 
 	app.Commands = []*cli.Command{
@@ -69,7 +69,7 @@ SOURCE CODE:
 		},
 		{
 			Name:      "install",
-			Usage:     "Download and install a <version> from source.",
+			Usage:     "Download and install specified Deno version",
 			ArgsUsage: "<version>",
 			Action: func(c *cli.Context) error {
 				return command.Install(c.Args().First())
