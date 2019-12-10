@@ -29,8 +29,7 @@ jobs:
         run: make test
 
       - name: Build
-        run: |
-          bash build.sh
+        run: make build
 
       # after success
 #      - name: Coverage
@@ -39,3 +38,15 @@ jobs:
 #          go get golang.org/x/tools/cmd/cover
 #          go get github.com/mattn/goveralls
 #          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(matrix.os, 'ubuntu') && startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          files: |
+            bin/dvm_darwin_amd64.tar.gz
+            bin/dvm_linux_amd64.tar.gz
+            bin/dvm_windows_amd64.tar.gz
+          draft: true
