@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	HomeDir            string
-	RootDir            string
-	CacheDir           string
-	ReleaseDir         string
-	ExecutableFilename string
-	DenoBinDir         string
+	HomeDir            string // $HOME
+	RootDir            string // $HOME/.dvm
+	CacheDir           string // cache dir
+	ReleaseDir         string // $HOME/.dvm/releases
+	ExecutableFilename string // in Unix: deno. in Windows: deno.exe
+	DenoBinDir         string // deno bin dir. defaults to $HOME/.deno/bin
 )
 
 func init() {

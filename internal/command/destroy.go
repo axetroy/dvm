@@ -18,7 +18,7 @@ func Destroy() error {
 	}
 
 	if err := survey.AskOne(prompt, &confirm); err != nil {
-		return err
+		return errors.Wrap(err, "prompt fail")
 	}
 
 	if confirm == false {
@@ -30,9 +30,10 @@ func Destroy() error {
 		return errors.Wrap(err, "remove `$HOME/.dvm` fail")
 	}
 
-	// remove $HOME/.deno
-	if err := os.RemoveAll(path.Dir(core.DenoBinDir)); err != nil {
-		return errors.Wrap(err, "remove `$HOME/.deno` fail")
+	// remove $HOME/.deno/bin/deno
+	currentUseDenoFilepath := path.Join(core.DenoBinDir, core.ExecutableFilename)
+	if err := os.RemoveAll(currentUseDenoFilepath); err != nil {
+		return errors.Wrapf(err, "remove `$HOME/.deno/bin/%s` fail", core.ExecutableFilename)
 	}
 
 	dvmFilepath, err := os.Executable()
