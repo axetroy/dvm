@@ -79,7 +79,8 @@ You can re-download the executable and overwrite the original file.
 or type the following command to upgrade to the latest version.
 
 ```bash
-> dvm upgrade
+$ dvm upgrade # upgrade to latest
+$ dvm upgrade v0.2.0 # Update to specified version
 ```
 
 ### Uninstall
