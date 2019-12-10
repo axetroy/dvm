@@ -13,7 +13,7 @@ func main() {
 	app := cli.NewApp()
 
 	app.Name = "dvm"
-	app.Usage = "version management for Deno"
+	app.Usage = "version manager for Deno"
 	app.Version = "0.1.2"
 	app.Authors = []*cli.Author{
 		{
@@ -41,6 +41,13 @@ COPYRIGHT:
 VERSION:
     {{.Version}}
     {{end}}
+EXAMPLES:
+    dvm install v0.26.0
+    dvm use v0.26.0
+    dvm uninstall v0.26.0
+    dvm ls
+    dvm ls-remote
+
 SOURCE CODE:
     https://github.com/axetroy/dvm
 `
@@ -101,7 +108,7 @@ SOURCE CODE:
 		// here is the commands for dvm self
 		{
 			Name:  "version",
-			Usage: "Print dvm version info to stdout",
+			Usage: "Print dvm version to stdout",
 			Action: func(context *cli.Context) error {
 				_, err := os.Stdout.Write([]byte(app.Version))
 
@@ -125,7 +132,7 @@ SOURCE CODE:
 		},
 		{
 			Name:  "destroy",
-			Usage: "Uninstall dvm and remove all the thing about Deno",
+			Usage: "Uninstall dvm",
 			Action: func(c *cli.Context) error {
 				return command.Destroy()
 			},
