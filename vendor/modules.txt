@@ -1,10 +1,10 @@
-# github.com/AlecAivazis/survey/v2 v2.0.4
+# github.com/AlecAivazis/survey/v2 v2.0.5
 github.com/AlecAivazis/survey/v2
 github.com/AlecAivazis/survey/v2/core
 github.com/AlecAivazis/survey/v2/terminal
 # github.com/VividCortex/ewma v1.1.1
 github.com/VividCortex/ewma
-# github.com/cheggaaa/pb/v3 v3.0.2
+# github.com/cheggaaa/pb/v3 v3.0.3
 github.com/cheggaaa/pb/v3
 github.com/cheggaaa/pb/v3/termutil
 # github.com/cpuguy83/go-md2man/v2 v2.0.0
@@ -29,5 +29,5 @@ github.com/russross/blackfriday/v2
 github.com/shurcooL/sanitized_anchor_name
 # github.com/urfave/cli/v2 v2.0.0
 github.com/urfave/cli/v2
-# golang.org/x/sys v0.0.0-20191110163157-d32e6e3b99c4
+# golang.org/x/sys v0.0.0-20191128015809-6d18c012aee9
 golang.org/x/sys/unix
