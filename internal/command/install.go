@@ -57,9 +57,7 @@ func Install(version string) error {
 	go func() {
 		<-quitAndCleanCache
 		// make sure dir been remove if it exit
-		if err != nil {
-			_ = os.RemoveAll(core.CacheDir)
-		}
+		_ = os.RemoveAll(core.CacheDir)
 		os.Exit(255)
 	}()
 
