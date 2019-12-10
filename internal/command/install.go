@@ -60,7 +60,7 @@ func Install(version string) error {
 		if err != nil {
 			_ = os.RemoveAll(core.CacheDir)
 		}
-		os.Exit(1)
+		os.Exit(255)
 	}()
 
 	defer signal.Stop(quitAndCleanCache)
@@ -90,7 +90,7 @@ func Install(version string) error {
 		if err != nil {
 			_ = os.RemoveAll(currentVersionWorkspaceDir)
 		}
-		os.Exit(1)
+		os.Exit(255)
 	}()
 
 	defer signal.Stop(quitAndCleanWorkspace)
