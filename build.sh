@@ -8,8 +8,6 @@ os_archs=(
     windows/amd64
 )
 
-os_archs=(${os_archs//$'\n'/ })
-
 releases=()
 fails=()
 
@@ -27,7 +25,7 @@ do
 
     echo building ${os_arch}
 
-    CGO_ENABLED=0 GOOS=${goos} GOARCH=${goarch} go build -gcflags=-trimpath=$GOPATH -asmflags=-trimpath=$GOPATH -ldflags "-s -w" -o ./bin/${filename} main.go >/dev/null 2>&1
+    CGO_ENABLED=0 GOOS=${goos} GOARCH=${goarch} go build -gcflags=-trimpath=$GOPATH -asmflags=-trimpath=$GOPATH -ldflags "-s -w" -o ./bin/${filename} main.go
 
     # if build success
     if [[ $? == 0 ]];then
