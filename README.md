@@ -78,7 +78,7 @@ dvm --help
 
 You can re-download the executable and overwrite the original file.
 
-or type the following command to upgrade to the latest version.
+or if you are using Linux/MacOS, run the following command to upgrade
 
 ```bash
 $ dvm upgrade # upgrade to latest
