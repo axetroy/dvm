@@ -11,6 +11,8 @@ func GetDenoArch() (*string, error) {
 
 	switch runtime.GOARCH {
 	case "amd64":
+		fallthrough
+	case "arm64":
 		denoArch = "x64"
 		break
 	default:

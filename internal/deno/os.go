@@ -13,6 +13,10 @@ func GetDenoOS() (*string, error) {
 	case "darwin":
 		denoOS = "osx"
 		break
+	case "openbsd":
+		fallthrough
+	case "freebsd":
+		fallthrough
 	case "linux":
 		denoOS = "linux"
 		break
