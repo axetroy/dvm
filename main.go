@@ -15,7 +15,7 @@ func main() {
 
 	app.Name = "dvm"
 	app.Usage = "version manager for Deno"
-	app.Version = "0.1.5"
+	app.Version = "0.1.6"
 	app.Authors = []*cli.Author{
 		{
 			Name:  "Axetroy",
