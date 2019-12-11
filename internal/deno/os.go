@@ -2,8 +2,6 @@ package deno
 
 import (
 	"runtime"
-
-	"github.com/pkg/errors"
 )
 
 func GetDenoOS() (*string, error) {
@@ -13,18 +11,12 @@ func GetDenoOS() (*string, error) {
 	case "darwin":
 		denoOS = "osx"
 		break
-	case "openbsd":
-		fallthrough
-	case "freebsd":
-		fallthrough
-	case "linux":
-		denoOS = "linux"
-		break
 	case "windows":
 		denoOS = "win"
 		break
 	default:
-		return nil, errors.New("not support your platform")
+		// default to linux
+		denoOS = "linux"
 	}
 
 	return &denoOS, nil
