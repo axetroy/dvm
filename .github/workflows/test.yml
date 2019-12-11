@@ -41,7 +41,7 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(matrix.os, 'ubuntu') && startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
+        if: job.status == 'success' && startsWith(matrix.os, 'ubuntu') && startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
