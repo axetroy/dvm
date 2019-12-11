@@ -15,6 +15,7 @@ import (
 	"runtime"
 
 	"github.com/axetroy/dvm/internal/core"
+	"github.com/axetroy/dvm/internal/fs"
 	"github.com/axetroy/dvm/internal/util"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
@@ -133,7 +134,17 @@ func Upgrade(version string, force bool) error {
 
 	// cover the binary file
 	if err := os.Rename(downloadedDvmFilepath, dvmExecutablePath); err != nil {
-		return errors.Wrapf(err, "rename `%s` to `%s` fail", downloadedDvmFilepath, dvmExecutablePath)
+		// if using windows
+		// If the cache file and the file to be replaced are not on the same drive drive
+		// This may got ERROR: The system cannot move the file to a different disk drive.
+		// then we use custom move as fallback
+		if runtime.GOOS == "windows" {
+			if errFallback := fs.MoveFile(downloadedDvmFilepath, dvmExecutablePath); errFallback != nil {
+				return errors.WithStack(errFallback)
+			}
+		} else {
+			return errors.Wrapf(err, "rename `%s` to `%s` fail", downloadedDvmFilepath, dvmExecutablePath)
+		}
 	}
 
 	ps := exec.Command(dvmExecutablePath, "--help")
