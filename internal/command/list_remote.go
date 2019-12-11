@@ -75,7 +75,7 @@ func ListRemote() error {
 		if isCurrentUse && isLatest {
 			fmt.Printf(" (%s)", color.GreenString("Latest and currently using"))
 		} else if isCurrentUse {
-			fmt.Printf(" (%s)", color.GreenString("currently using"))
+			fmt.Printf(" (%s)", color.GreenString("Currently using"))
 		} else if isLatest {
 			fmt.Printf(" (%s)", color.GreenString("Latest"))
 		}
