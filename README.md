@@ -14,13 +14,10 @@ Features:
 
 - [x] Cross platform support
 - [x] Easy to use
-- [x] No runtime dependencies (This is why it is not written in nodejs)
+- [x] No runtime dependencies
 - [x] Zero configuration
 - [x] Fully compatible with installed Deno
 
-> Due to Deno's historical reasons, dvm does not support older Deno versions.
-> eg `deno --version` is an invalid command in older versions
->
 > NOTE: If you are using [justjavac/dvm](https://github.com/justjavac/dvm). They may conflict.
 > Because both tools use the `$HOME/.dvm` directory
 
