@@ -48,5 +48,9 @@ jobs:
           files: |
             bin/dvm_darwin_amd64.tar.gz
             bin/dvm_linux_amd64.tar.gz
+            bin/dvm_linux_arm64.tar.gz
+            bin/dvm_freebsd_amd64.tar.gz
+            bin/dvm_openbsd_amd64.tar.gz
+            bin/dvm_openbsd_arm64.tar.gz
             bin/dvm_windows_amd64.tar.gz
           draft: true
