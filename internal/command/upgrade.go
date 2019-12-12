@@ -13,6 +13,7 @@ import (
 	"os/signal"
 	"path"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/axetroy/dvm/internal/core"
@@ -173,7 +174,8 @@ func Upgrade(version string, force bool) error {
 
 	downloadedDvmFilepath := path.Join(core.CacheDir, "dvm")
 
-	if runtime.GOOS == "windows" {
+	if runtime.GOOS == "windows" && !strings.HasSuffix(downloadedDvmFilepath, ".exe") {
+		// Ensure to add '.exe' to given path on Windows
 		downloadedDvmFilepath += ".exe"
 	}
 
