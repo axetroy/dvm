@@ -80,6 +80,9 @@ SOURCE CODE:
 			Usage:     "Download and install specified Deno version",
 			ArgsUsage: "<version>",
 			Action: func(c *cli.Context) error {
+				if c.Args().Len() == 0 {
+					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
+				}
 				return command.Install(c.Args().First())
 			},
 		},
@@ -88,6 +91,9 @@ SOURCE CODE:
 			Usage:     "Uninstall specified Deno version",
 			ArgsUsage: "<version>",
 			Action: func(c *cli.Context) error {
+				if c.Args().Len() == 0 {
+					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
+				}
 				return command.Uninstall(c.Args().First())
 			},
 		},
@@ -96,6 +102,9 @@ SOURCE CODE:
 			Usage:     "Use specified Deno version",
 			ArgsUsage: "<version>",
 			Action: func(c *cli.Context) error {
+				if c.Args().Len() == 0 {
+					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
+				}
 				return command.Use(c.Args().First())
 			},
 		},
@@ -106,11 +115,26 @@ SOURCE CODE:
 				return command.Unuse()
 			},
 		},
+		{
+			Name:      "exec",
+			Usage:     "Run Deno command on <version>.",
+			ArgsUsage: "<version> <args>",
+			Action: func(c *cli.Context) error {
+				if c.Args().Len() == 0 {
+					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
+				}
+
+				version := c.Args().First()
+				args := c.Args().Slice()[1:]
+
+				return command.Exec(version, args)
+			},
+		},
 		// here is the commands for dvm self
 		{
 			Name:  "version",
 			Usage: "Print dvm version to stdout",
-			Action: func(context *cli.Context) error {
+			Action: func(c *cli.Context) error {
 				_, err := os.Stdout.Write([]byte(app.Version))
 
 				if err != nil {
