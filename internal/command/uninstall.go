@@ -6,10 +6,23 @@ import (
 	"path"
 
 	"github.com/axetroy/dvm/internal/core"
+	"github.com/axetroy/dvm/internal/deno"
 	"github.com/pkg/errors"
 )
 
 func Uninstall(version string) error {
+	currentUseVersion, err := deno.GetCurrentUseVersion()
+
+	if err != nil {
+		return err
+	}
+
+	if currentUseVersion != nil && *currentUseVersion == version {
+		if err := os.Remove(path.Join(core.DenoBinDir, core.ExecutableFilename)); err != nil {
+			return err
+		}
+	}
+
 	files, err := ioutil.ReadDir(core.ReleaseDir)
 
 	if err != nil {
