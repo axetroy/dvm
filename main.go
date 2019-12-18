@@ -46,6 +46,7 @@ EXAMPLES:
     {{.Name}} install v0.26.0
     {{.Name}} use v0.26.0
     {{.Name}} uninstall v0.26.0
+    {{.Name}} exec v0.26.0 https://deno.land/std/examples/welcome.ts
     {{.Name}} ls
     {{.Name}} ls-remote
 
