@@ -25,6 +25,11 @@ func DownloadFile(filepath string, url string) error {
 
 	defer response.Body.Close()
 
+	// 404
+	if response.StatusCode == http.StatusNotFound {
+		return errors.New(http.StatusText(response.StatusCode))
+	}
+
 	if response.StatusCode >= http.StatusBadRequest {
 		return errors.New(fmt.Sprintf("download file with status code %d", response.StatusCode))
 	}

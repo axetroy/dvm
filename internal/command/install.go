@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"path"
@@ -41,6 +42,9 @@ func Install(version string) error {
 	defer signal.Stop(quitAndCleanCache)
 
 	if err := util.DownloadFile(cacheFilepath, downloadURL); err != nil {
+		if err.Error() == http.StatusText(http.StatusNotFound) {
+			return errors.Wrapf(err, "Deno %s is not yet released or available", version)
+		}
 		return errors.Wrapf(err, "download remote file `%s` fail", downloadURL)
 	}
 
