@@ -1,11 +1,7 @@
 package command
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strings"
 
 	"github.com/axetroy/dvm/internal/deno"
 	"github.com/fatih/color"
@@ -13,53 +9,16 @@ import (
 )
 
 func ListRemote() error {
-	url := "https://api.github.com/repos/denoland/deno/git/refs/tags"
-
-	r, err := http.Get(url)
+	versions, err := deno.GetRemoteVersions()
 
 	if err != nil {
-		return errors.Wrapf(err, "request `%s` fail", url)
-	}
-
-	defer r.Body.Close()
-
-	if r.StatusCode >= http.StatusBadRequest {
-		return errors.New(fmt.Sprintf("download file with status code %d", r.StatusCode))
-	}
-
-	type node struct {
-		Ref    string `json:"ref"`
-		NodeID string `json:"node_id"`
-		URL    string `json:"url"`
-		Object struct {
-			SHA  string `json:"sha"`
-			Type string `json:"type"`
-			URL  string `json:"url"`
-		}
-	}
-
-	b, err := ioutil.ReadAll(r.Body)
-
-	if err != nil {
-		return errors.Wrap(err, "real response body error")
-	}
-
-	var res []node
-	var versions = make([]string, 0)
-
-	if err := json.Unmarshal(b, &res); err != nil {
-		return errors.Wrap(err, "JSON parse fail")
-	}
-
-	for _, n := range res {
-		versions = append(versions, strings.TrimLeft(n.Ref, "refs/tags/"))
+		return errors.Wrap(err, "get remote version fail")
 	}
 
 	currentDenoVersion, err := deno.GetCurrentUseVersion()
 
 	if err != nil {
-		// TODO: ignore error, remote this line in the future
-		// return err
+		// ignore error
 	}
 
 	for i, v := range versions {

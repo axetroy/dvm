@@ -22,7 +22,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func getLatestVersion() (*string, error) {
+func getLatestDvmVersion() (*string, error) {
 	res, err := http.Get("https://api.github.com/repos/axetroy/dvm/releases/latest")
 
 	if err != nil {
@@ -115,7 +115,7 @@ func Upgrade(version string, force bool) error {
 	)
 
 	if version == "" {
-		if v, err := getLatestVersion(); err != nil {
+		if v, err := getLatestDvmVersion(); err != nil {
 			return errors.Wrap(err, "get latest version fail")
 		} else {
 			version = *v

@@ -29,14 +29,23 @@ func GetRemoteTarFilename() (*string, error) {
 	return &filename, nil
 }
 
-func GetRemoteDownloadURL(version string) (*string, error) {
+func GetRemoteDownloadURL(version string) (string, error) {
+
+	if version == "latest" {
+		if latest, err := GetLatestRemoteVersion(); err != nil {
+			return "", err
+		} else {
+			version = latest
+		}
+	}
+
 	filename, err := GetRemoteTarFilename()
 
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	url := fmt.Sprintf("https://github.com/denoland/deno/releases/download/%s/%s", version, *filename)
 
-	return &url, nil
+	return url, nil
 }

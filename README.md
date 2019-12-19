@@ -18,9 +18,6 @@ Features:
 - [x] Zero configuration
 - [x] Fully compatible with installed Deno
 
-> NOTE: If you are using [justjavac/dvm](https://github.com/justjavac/dvm). They may conflict.
-> Because both tools use the `$HOME/.dvm` directory
-
 ### Usage
 
 Whether you have installed Deno or not will not affect the use of dvm.

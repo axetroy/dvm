@@ -40,8 +40,8 @@ func Install(version string) error {
 
 	defer signal.Stop(quitAndCleanCache)
 
-	if err := util.DownloadFile(cacheFilepath, *downloadURL); err != nil {
-		return errors.Wrapf(err, "download remote file `%s` fail", *downloadURL)
+	if err := util.DownloadFile(cacheFilepath, downloadURL); err != nil {
+		return errors.Wrapf(err, "download remote file `%s` fail", downloadURL)
 	}
 
 	denoFilepath, err := util.Unzip(cacheFilepath, path.Dir(cacheFilepath))
