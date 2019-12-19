@@ -8,6 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// list of remote Deno
 func ListRemote() error {
 	versions, err := deno.GetRemoteVersions()
 
@@ -15,7 +16,7 @@ func ListRemote() error {
 		return errors.Wrap(err, "get remote version fail")
 	}
 
-	currentDenoVersion, err := deno.GetCurrentUseVersion()
+	currentDenoVersion, err := deno.GetCurrentUsingVersion()
 
 	if err != nil {
 		// ignore error

@@ -8,6 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// unuse Deno, but will not remove it.
 func Unuse() error {
 	denoFilepath := path.Join(core.DenoBinDir, core.ExecutableFilename)
 	if err := os.RemoveAll(denoFilepath); err != nil {

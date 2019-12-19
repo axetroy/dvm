@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// get latest remote version
 func GetLatestRemoteVersion() (string, error) {
 	versions, err := GetRemoteVersions()
 
@@ -26,6 +27,7 @@ func GetLatestRemoteVersion() (string, error) {
 	return latest, nil
 }
 
+// get remote versions
 func GetRemoteVersions() ([]string, error) {
 	url := "https://api.github.com/repos/denoland/deno/git/refs/tags"
 

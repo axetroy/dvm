@@ -14,6 +14,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// install Deno
 func Install(version string) error {
 	filename, err := deno.GetRemoteTarFilename()
 
@@ -48,7 +49,7 @@ func Install(version string) error {
 		return errors.Wrapf(err, "download remote file `%s` fail", downloadURL)
 	}
 
-	denoFilepath, err := util.Unzip(cacheFilepath, path.Dir(cacheFilepath))
+	denoFilepath, err := deno.Unzip(cacheFilepath, path.Dir(cacheFilepath))
 
 	if err != nil {
 		return errors.Wrap(err, "unzip tar file fail")
@@ -88,7 +89,7 @@ func Install(version string) error {
 
 	fmt.Printf("Install successfully! try `dvm use %s` before you use it.\n", version)
 
-	if currentUseVersion, err := deno.GetCurrentUseVersion(); err != nil {
+	if currentUseVersion, err := deno.GetCurrentUsingVersion(); err != nil {
 		// ignore error
 		return nil
 	} else if currentUseVersion == nil {

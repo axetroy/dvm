@@ -5,8 +5,9 @@ import (
 	"github.com/axetroy/dvm/internal/deno"
 )
 
+// print current using Deno version
 func Current() error {
-	version, err := deno.GetCurrentUseVersion()
+	version, err := deno.GetCurrentUsingVersion()
 
 	if err != nil {
 		return err

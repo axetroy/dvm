@@ -12,6 +12,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// execute with specified Deno version
 func Exec(version string, args []string) error {
 	files, err := ioutil.ReadDir(core.ReleaseDir)
 

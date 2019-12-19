@@ -5,6 +5,7 @@ import (
 	"runtime"
 )
 
+// get remote Deno tar filename
 func GetRemoteTarFilename() (*string, error) {
 	os, err := GetDenoOS()
 
@@ -29,6 +30,7 @@ func GetRemoteTarFilename() (*string, error) {
 	return &filename, nil
 }
 
+// get remote Deno tar download URL for specified version
 func GetRemoteDownloadURL(version string) (string, error) {
 
 	if version == "latest" {

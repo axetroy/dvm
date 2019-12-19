@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// ensure dir exist
 func EnsureDir(dir string) error {
 	parent := path.Dir(dir)
 	if _, err := os.Stat(parent); os.IsNotExist(err) {

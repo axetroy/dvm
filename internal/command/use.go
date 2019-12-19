@@ -13,6 +13,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// use Deno
 func Use(version string) error {
 	files, err := ioutil.ReadDir(core.ReleaseDir)
 

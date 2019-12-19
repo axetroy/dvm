@@ -15,7 +15,8 @@ func isHaveDenoInstall() (string, bool) {
 	}
 }
 
-func GetCurrentUseVersion() (*string, error) {
+// get current using version
+func GetCurrentUsingVersion() (*string, error) {
 	denoFilepath, ok := isHaveDenoInstall()
 
 	if !ok {

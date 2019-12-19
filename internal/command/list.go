@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// list of installed Deno versions
 func List() error {
 	files, err := ioutil.ReadDir(core.ReleaseDir)
 
@@ -22,7 +23,7 @@ func List() error {
 		return nil
 	}
 
-	currentDenoVersion, err := deno.GetCurrentUseVersion()
+	currentDenoVersion, err := deno.GetCurrentUsingVersion()
 
 	if err != nil {
 		// ignore error

@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// uninstall dvm
 func Destroy() error {
 	confirm := false
 

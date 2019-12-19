@@ -10,8 +10,9 @@ import (
 	"github.com/pkg/errors"
 )
 
+// uninstall Deno
 func Uninstall(version string) error {
-	currentUseVersion, err := deno.GetCurrentUseVersion()
+	currentUseVersion, err := deno.GetCurrentUsingVersion()
 
 	if err != nil {
 		return err

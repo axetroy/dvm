@@ -6,6 +6,7 @@ import (
 
 	"github.com/axetroy/dvm/internal/command"
 	"github.com/axetroy/dvm/internal/core"
+	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
@@ -16,7 +17,7 @@ func main() {
 
 	app.Name = "dvm"
 	app.Usage = "version manager for Deno"
-	app.Version = "0.1.11"
+	app.Version = dvm.GetCurrentUsingVersion()
 	app.Authors = []*cli.Author{
 		{
 			Name:  "Axetroy",
@@ -134,19 +135,6 @@ SOURCE CODE:
 			},
 		},
 		// here is the commands for dvm self
-		{
-			Name:  "version",
-			Usage: "Print dvm version to stdout",
-			Action: func(c *cli.Context) error {
-				_, err := os.Stdout.Write([]byte(app.Version))
-
-				if err != nil {
-					return errors.Wrap(err, "write to stdout fail")
-				}
-
-				return nil
-			},
-		},
 		{
 			Name:      "upgrade",
 			Usage:     "Upgrade dvm",

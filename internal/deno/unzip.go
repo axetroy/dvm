@@ -1,16 +1,17 @@
-package util
+package deno
 
 import (
 	"archive/zip"
 	"compress/gzip"
 	"fmt"
-	"github.com/pkg/errors"
 	"io"
 	"os"
 	"path"
+
+	"github.com/pkg/errors"
 )
 
-func DecompressZip(tarFile, dest string) (*string, error) {
+func decompressZip(tarFile, dest string) (*string, error) {
 	r, err := zip.OpenReader(tarFile)
 
 	if err != nil {
@@ -50,7 +51,7 @@ func DecompressZip(tarFile, dest string) (*string, error) {
 	return &newFilepath, nil
 }
 
-func DecompressGz(tarFile, dest string) (*string, error) {
+func decompressGz(tarFile, dest string) (*string, error) {
 	fileReader, err := os.Open(tarFile)
 
 	if err != nil {
@@ -97,9 +98,9 @@ func DecompressGz(tarFile, dest string) (*string, error) {
 func Unzip(tarFilepath, destDir string) (*string, error) {
 	switch path.Ext(tarFilepath) {
 	case ".zip":
-		return DecompressZip(tarFilepath, destDir)
+		return decompressZip(tarFilepath, destDir)
 	case ".gz":
-		return DecompressGz(tarFilepath, destDir)
+		return decompressGz(tarFilepath, destDir)
 	default:
 		return nil, errors.New(fmt.Sprintf("not support unzip the file `%s`", tarFilepath))
 	}

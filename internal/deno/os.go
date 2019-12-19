@@ -4,6 +4,7 @@ import (
 	"runtime"
 )
 
+// get Deno os for current platform
 func GetDenoOS() (*string, error) {
 	var denoOS string
 

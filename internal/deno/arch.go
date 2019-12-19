@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// get Deno arch for current platform
 func GetDenoArch() (*string, error) {
 	var denoArch string
 
