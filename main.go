@@ -6,6 +6,7 @@ import (
 
 	"github.com/axetroy/dvm/internal/command"
 	"github.com/axetroy/dvm/internal/core"
+	"github.com/fatih/color"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )
@@ -168,7 +169,12 @@ SOURCE CODE:
 
 	// regardless of the result, the cache directory should be delete
 	if err := app.Run(os.Args); err != nil {
-		fmt.Printf("%+v\n", err)
+		if os.Getenv("DEBUG") != "" {
+			fmt.Printf("%+v\n", err)
+		} else {
+			fmt.Println(err.Error())
+			fmt.Printf("run with environment variables %s to print more information\n", color.GreenString("DEBUG=1"))
+		}
 		_ = os.RemoveAll(core.CacheDir)
 		os.Exit(1)
 	} else {
