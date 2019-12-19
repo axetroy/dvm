@@ -81,7 +81,7 @@ SOURCE CODE:
 		{
 			Name:      "install",
 			Usage:     "Download and install specified Deno version",
-			ArgsUsage: "<version>",
+			ArgsUsage: "<version>|latest",
 			Action: func(c *cli.Context) error {
 				if c.Args().Len() == 0 {
 					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
