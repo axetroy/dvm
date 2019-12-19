@@ -111,7 +111,8 @@ $ make test
 
 ### Related
 
-[justjavac/dvm](https://github.com/justjavac/dvm) nodejs version
+[justjavac/dvm](https://github.com/justjavac/dvm) Node.js implement
+[imbsky/dvm](https://github.com/imbsky/dvm) Reason implement
 
 ### License
 
