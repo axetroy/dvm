@@ -22,7 +22,7 @@ func GetLatestRemoteVersion() (string, error) {
 		return "", errors.New("no distributions found")
 	}
 
-	latest := versions[0]
+	latest := versions[len(versions)-1]
 
 	return latest, nil
 }
