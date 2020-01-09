@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.0.5
-	github.com/cheggaaa/pb/v3 v3.0.3
+	github.com/cheggaaa/pb/v3 v3.0.4
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/fatih/color v1.9.0
 	github.com/pkg/errors v0.8.1
