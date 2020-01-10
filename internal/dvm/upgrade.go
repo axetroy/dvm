@@ -71,6 +71,8 @@ func Upgrade(version string, force bool) error {
 		os.Exit(255)
 	}()
 
+	fmt.Printf("Download %s\n", downloadURL)
+
 	if err = util.DownloadFile(tarFilepath, downloadURL); err != nil {
 		return errors.Wrap(err, "download fail")
 	}

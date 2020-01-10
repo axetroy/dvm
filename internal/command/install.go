@@ -22,11 +22,13 @@ func Install(version string) error {
 		return errors.Wrap(err, "get remote tar filename fail")
 	}
 
-	downloadURL, err := deno.GetRemoteDownloadURL(version)
+	v, downloadURL, err := deno.GetRemoteDownloadURL(version)
 
 	if err != nil {
 		return errors.Wrap(err, "get remote download url fail")
 	}
+
+	version = v
 
 	cacheFilepath := path.Join(core.CacheDir, *filename)
 
@@ -41,6 +43,8 @@ func Install(version string) error {
 	}()
 
 	defer signal.Stop(quitAndCleanCache)
+
+	fmt.Printf("Download %s\n", downloadURL)
 
 	if err := util.DownloadFile(cacheFilepath, downloadURL); err != nil {
 		if err.Error() == http.StatusText(http.StatusNotFound) {

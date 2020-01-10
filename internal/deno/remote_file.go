@@ -31,11 +31,11 @@ func GetRemoteTarFilename() (*string, error) {
 }
 
 // get remote Deno tar download URL for specified version
-func GetRemoteDownloadURL(version string) (string, error) {
+func GetRemoteDownloadURL(version string) (v string, url string, err error) {
 
 	if version == "latest" {
 		if latest, err := GetLatestRemoteVersion(); err != nil {
-			return "", err
+			return "", "", err
 		} else {
 			version = latest
 		}
@@ -44,10 +44,10 @@ func GetRemoteDownloadURL(version string) (string, error) {
 	filename, err := GetRemoteTarFilename()
 
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
-	url := fmt.Sprintf("https://github.com/denoland/deno/releases/download/%s/%s", version, *filename)
+	downloadURL := fmt.Sprintf("https://github.com/denoland/deno/releases/download/%s/%s", version, *filename)
 
-	return url, nil
+	return version, downloadURL, nil
 }
