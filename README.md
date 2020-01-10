@@ -47,9 +47,9 @@ If you are using Linux/MacOS. you can install it with following command:
 
 ```shell
 # install latest version
-wget -qO- https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # or install specified version
-wget -qO- https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v0.1.0
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v0.1.0
 ```
 
 Or
