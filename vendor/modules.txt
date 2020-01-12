@@ -21,7 +21,7 @@ github.com/mattn/go-isatty
 github.com/mattn/go-runewidth
 # github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b
 github.com/mgutz/ansi
-# github.com/pkg/errors v0.8.1
+# github.com/pkg/errors v0.9.0
 github.com/pkg/errors
 # github.com/russross/blackfriday/v2 v2.0.1
 github.com/russross/blackfriday/v2
