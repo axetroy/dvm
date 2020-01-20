@@ -12,7 +12,7 @@ Focus on the simplest way to manage versions.
 
 Features:
 
-- [x] Cross platform support
+- [x] Cross-platform support
 - [x] Easy to use
 - [x] No runtime dependencies
 - [x] Zero configuration
@@ -43,7 +43,7 @@ $ dvm --help
 
 ### Installation
 
-If you are using Linux/MacOS. you can install it with following command:
+If you are using Linux/macOS. you can install it with the following command:
 
 ```shell
 # install latest version
