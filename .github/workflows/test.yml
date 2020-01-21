@@ -3,7 +3,7 @@ name: test
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
@@ -39,9 +39,13 @@ jobs:
 #          go get github.com/mattn/goveralls
 #          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: job.status == 'success' && startsWith(matrix.os, 'ubuntu') && startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
+  release:
+    name: Release to Github
+    if: startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
@@ -53,4 +57,4 @@ jobs:
             bin/dvm_openbsd_amd64.tar.gz
             bin/dvm_openbsd_arm64.tar.gz
             bin/dvm_windows_amd64.tar.gz
-          draft: true
+          draft: false
