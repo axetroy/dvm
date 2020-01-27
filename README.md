@@ -20,6 +20,19 @@ Features:
 - [x] Zero configuration
 - [x] Fully compatible with installed Deno
 
+| Command                         | Description                                 |
+| ------------------------------- | ------------------------------------------- |
+| dvm current                     | Display currently activated version of Deno |
+| dvm ls                          | List installed versions                     |
+| dvm ls-remote                   | List remote versions available for install  |
+| dvm install \<version\>\|latest | Download and install specified Deno version |
+| dvm uninstall \<version\>       | Uninstall specified Deno version            |
+| dvm use \<version\>             | Use specified Deno version                  |
+| dvm unuse                       | Unused specified Deno version               |
+| dvm exec \<version\> [commands] | Run Deno command on \<version\>             |
+| dvm upgrade [version]           | Upgrade dvm                                 |
+| dvm destroy                     | Uninstall dvm                               |
+
 ### Usage
 
 Whether you have installed Deno or not will not affect the use of dvm.
