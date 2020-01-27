@@ -22,7 +22,7 @@ func Destroy() error {
 		return errors.Wrap(err, "prompt fail")
 	}
 
-	if confirm == false {
+	if !confirm {
 		return nil
 	}
 

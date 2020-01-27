@@ -26,7 +26,7 @@ func List() error {
 	currentDenoVersion, err := deno.GetCurrentUsingVersion()
 
 	if err != nil {
-		// ignore error
+		return err
 	}
 
 	for _, f := range files {

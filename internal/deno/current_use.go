@@ -7,19 +7,19 @@ import (
 	"github.com/pkg/errors"
 )
 
-func isHaveDenoInstall() (string, bool) {
+func getInstalledDenoFilepath() string {
 	if denoPath, err := exec.LookPath("deno"); err != nil {
-		return "", false
+		return ""
 	} else {
-		return denoPath, strings.TrimSpace(denoPath) != ""
+		return strings.TrimSpace(denoPath)
 	}
 }
 
 // get current using version
 func GetCurrentUsingVersion() (*string, error) {
-	denoFilepath, ok := isHaveDenoInstall()
+	denoFilepath := getInstalledDenoFilepath()
 
-	if !ok {
+	if denoFilepath == "" {
 		return nil, nil
 	}
 

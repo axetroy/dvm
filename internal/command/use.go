@@ -55,9 +55,9 @@ func Use(version string) error {
 
 	if match == false {
 		return errors.New(fmt.Sprintf("N/A: version `%s` is not yet installed. try install with the following command `%s` before use it", version, color.GreenString("dvm install "+version)))
-	} else {
-		fmt.Printf("Currently using Deno %s\n", version)
 	}
+
+	fmt.Printf("Currently using Deno %s\n", version)
 
 	return nil
 }
