@@ -64,13 +64,20 @@ curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bas
 
 ```bash
 # ~/.bash_profile
-export PATH="$PATH:~/bin"
+export PATH="$PATH:$HOME/bin"
 ```
 
-最后，试一下是否设置正确
+然后，试一下是否设置正确
 
 ```bash
 dvm --help
+```
+
+最后，为了正确使用 Deno，你还需要设置环境变量
+
+```bash
+# ~/.bash_profile
+export PATH="$PATH:$HOME/.deno/bin"
 ```
 
 ### 升级

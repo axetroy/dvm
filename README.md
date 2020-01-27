@@ -64,13 +64,20 @@ eg, the executable file is in the `~/bin` directory.
 
 ```bash
 # ~/.bash_profile
-export PATH="$PATH:~/bin"
+export PATH="$PATH:$HOME/bin"
 ```
 
-finally, try it out.
+then, try it out.
 
 ```bash
 dvm --help
+```
+
+Finally, to use Deno correctly, you also need to set environment variables
+
+```bash
+# ~/.bash_profile
+export PATH="$PATH:$HOME/.deno/bin"
 ```
 
 ### Upgrade
