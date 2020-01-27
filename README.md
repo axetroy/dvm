@@ -8,7 +8,7 @@ English | [中文简体](README_zh-CN.md)
 
 ## dvm
 
-`dvm` is a command-line tool for manage Deno versions.
+`dvm` is a command-line tool to manage Deno versions.
 
 Focus on the simplest way to manage versions.
 
