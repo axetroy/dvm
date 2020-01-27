@@ -113,10 +113,10 @@ SOURCE CODE:
 			},
 		},
 		{
-			Name:  "unuse",
+			Name:  "unused",
 			Usage: "Unused specified Deno version",
 			Action: func(c *cli.Context) error {
-				return command.Unuse()
+				return command.Unused()
 			},
 		},
 		{

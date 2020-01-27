@@ -28,7 +28,7 @@
 | dvm install \<version\>\|latest | 下载并安装指定的 Deno 版本       |
 | dvm uninstall \<version\>       | 卸载指定的 Deno 版本             |
 | dvm use \<version\>             | 使用指定的 Deno 版本             |
-| dvm unuse                       | 禁用 Deno                        |
+| dvm unused                      | 禁用 Deno                        |
 | dvm exec \<version\> [commands] | 以指定的 Deno 版本运行 Deno 命令 |
 | dvm upgrade [version]           | 升级 dvm                         |
 | dvm destroy                     | 卸载 dvm                         |
