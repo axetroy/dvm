@@ -28,7 +28,7 @@ Features:
 | dvm install \<version\>\|latest | Download and install specified Deno version |
 | dvm uninstall \<version\>       | Uninstall specified Deno version            |
 | dvm use \<version\>             | Use specified Deno version                  |
-| dvm unused                      | Unused specified Deno version               |
+| dvm unused                      | Unused Deno version                         |
 | dvm exec \<version\> [commands] | Run Deno command on \<version\>             |
 | dvm upgrade [version]           | Upgrade dvm                                 |
 | dvm destroy                     | Uninstall dvm                               |
