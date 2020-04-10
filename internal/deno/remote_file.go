@@ -3,17 +3,19 @@ package deno
 import (
 	"fmt"
 	"runtime"
+
+	"github.com/Masterminds/semver"
 )
 
 // get remote Deno tar filename
-func GetRemoteTarFilename() (*string, error) {
-	os, err := GetDenoOS()
+func GetRemoteTarFilename(version string) (*string, error) {
+	os, err := GetDenoOS(version)
 
 	if err != nil {
 		return nil, err
 	}
 
-	arch, err := GetDenoArch()
+	arch, err := GetDenoArch(version)
 
 	if err != nil {
 		return nil, err
@@ -25,7 +27,26 @@ func GetRemoteTarFilename() (*string, error) {
 		extensionName = "zip"
 	}
 
-	filename := fmt.Sprintf("deno_%s_%s.%s", *os, *arch, extensionName)
+	v, err := semver.NewVersion(version)
+
+	if err != nil {
+		return nil, err
+	}
+
+	v1, err := semver.NewVersion("0.39.0")
+
+	if err != nil {
+		return nil, err
+	}
+
+	var filename string
+
+	if v.LessThan(v1) {
+		filename = fmt.Sprintf("deno_%s_%s.%s", *os, *arch, extensionName)
+	} else {
+		// use the new release file
+		filename = fmt.Sprintf("deno-%s-%s.zip", *arch, *os)
+	}
 
 	return &filename, nil
 }
@@ -41,7 +62,7 @@ func GetRemoteDownloadURL(version string) (v string, url string, err error) {
 		}
 	}
 
-	filename, err := GetRemoteTarFilename()
+	filename, err := GetRemoteTarFilename(version)
 
 	if err != nil {
 		return "", "", err

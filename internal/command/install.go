@@ -16,7 +16,7 @@ import (
 
 // install Deno
 func Install(version string) error {
-	filename, err := deno.GetRemoteTarFilename()
+	filename, err := deno.GetRemoteTarFilename(version)
 
 	if err != nil {
 		return errors.Wrap(err, "get remote tar filename fail")
