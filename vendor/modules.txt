@@ -2,8 +2,8 @@
 github.com/AlecAivazis/survey/v2
 github.com/AlecAivazis/survey/v2/core
 github.com/AlecAivazis/survey/v2/terminal
-# github.com/Masterminds/semver v1.5.0
-github.com/Masterminds/semver
+# github.com/Masterminds/semver/v3 v3.0.3
+github.com/Masterminds/semver/v3
 # github.com/VividCortex/ewma v1.1.1
 github.com/VividCortex/ewma
 # github.com/cheggaaa/pb/v3 v3.0.4

@@ -3,7 +3,7 @@ package deno
 import (
 	"runtime"
 
-	"github.com/Masterminds/semver"
+	"github.com/Masterminds/semver/v3"
 )
 
 // get Deno os for current platform
