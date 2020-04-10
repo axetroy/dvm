@@ -36,7 +36,7 @@ func decompressZip(tarFile, dest string) (*string, error) {
 
 	defer src.Close()
 
-	dst, err := os.Create(newFilepath)
+	dst, err := os.OpenFile(newFilepath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 
 	if err != nil {
 		return nil, err
