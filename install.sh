@@ -45,7 +45,8 @@ main() {
 
     echo "[1/3] Download ${asset_uri} to ${downloadFolder}"
     rm -f ${dest_file}
-    wget -P "${downloadFolder}" "${asset_uri}"
+    # wget -P "${downloadFolder}" "${asset_uri}"
+    curl --location --output "${dest_file}" "${asset_uri}"
 
     echo "[2/3] Install dvm to the ${HOME}/bin"
     mkdir -p ${HOME}/bin
