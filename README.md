@@ -104,6 +104,19 @@ $ dvm upgrade # upgrade to latest
 $ dvm upgrade v0.2.0 # Update to specified version
 ```
 
+### .dvmrc
+
+You can use `.dvmrc` file to lock your deno project to a specific version
+
+When you run the `dvm use` command, dvm will pick your deno version
+
+```bash
+# .dvmrc
+v1.0.0 # this can be 1.0.0 as well
+
+$ dvm use
+```
+
 ### Uninstall
 
 run the following command to uninstall `dvm` or remove `dvm` executable file and `$HOME/.dvm` folder by manual
