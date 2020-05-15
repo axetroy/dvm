@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -60,6 +61,8 @@ func GetRemoteVersions() ([]string, error) {
 		return nil, errors.Wrap(err, "real response body error")
 	}
 
+	//fmt.Println(string(b))
+
 	var res []node
 	var versions = make([]string, 0)
 
@@ -67,8 +70,19 @@ func GetRemoteVersions() ([]string, error) {
 		return nil, errors.Wrap(err, "JSON parse fail")
 	}
 
+	versionReg := regexp.MustCompile("^v\\d+\\.\\d+\\.\\d+(-.*)?$")
+
 	for _, n := range res {
-		versions = append(versions, strings.TrimSpace(strings.TrimLeft(n.Ref, "refs/tags/")))
+		tag := strings.TrimSpace(strings.TrimLeft(n.Ref, "refs/tags/"))
+
+		// ignore std tag. eg. refs/tags/std/0.50.0
+		if strings.HasPrefix(tag, "std") {
+			continue
+		}
+
+		if versionReg.MatchString(tag) {
+			versions = append(versions, tag)
+		}
 	}
 
 	return versions, nil
