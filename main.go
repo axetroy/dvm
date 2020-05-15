@@ -82,7 +82,8 @@ SOURCE CODE:
 		{
 			Name:      "install",
 			Usage:     "Download and install specified Deno version",
-			ArgsUsage: "<version>|latest",
+			ArgsUsage: "<version> | latest",
+			Aliases:   []string{"i"},
 			Action: func(c *cli.Context) error {
 				if c.Args().Len() == 0 {
 					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
@@ -93,12 +94,13 @@ SOURCE CODE:
 		{
 			Name:      "uninstall",
 			Usage:     "Uninstall specified Deno version",
-			ArgsUsage: "<version>",
+			ArgsUsage: "<version1> <version2> ...",
+			Aliases:   []string{"rm"},
 			Action: func(c *cli.Context) error {
 				if c.Args().Len() == 0 {
 					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
 				}
-				return command.Uninstall(c.Args().First())
+				return command.Uninstall(c.Args().Slice())
 			},
 		},
 		{

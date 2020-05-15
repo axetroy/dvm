@@ -11,29 +11,31 @@ import (
 )
 
 // uninstall Deno
-func Uninstall(version string) error {
+func Uninstall(versions []string) error {
 	currentUseVersion, err := deno.GetCurrentUsingVersion()
 
 	if err != nil {
 		return err
 	}
 
-	if currentUseVersion != nil && *currentUseVersion == version {
-		if err := os.Remove(path.Join(core.DenoBinDir, core.ExecutableFilename)); err != nil {
-			return err
+	for _, version := range versions {
+		if currentUseVersion != nil && *currentUseVersion == version {
+			if err := os.Remove(path.Join(core.DenoBinDir, core.ExecutableFilename)); err != nil {
+				return err
+			}
 		}
-	}
 
-	files, err := ioutil.ReadDir(core.ReleaseDir)
+		files, err := ioutil.ReadDir(core.ReleaseDir)
 
-	if err != nil {
-		return errors.Wrapf(err, "read dir `%s` fail", core.ReleaseDir)
-	}
+		if err != nil {
+			return errors.Wrapf(err, "read dir `%s` fail", core.ReleaseDir)
+		}
 
-	for _, f := range files {
-		if f.Name() == version {
-			if err := os.RemoveAll(path.Join(core.ReleaseDir, f.Name())); err != nil {
-				return errors.Wrapf(err, "uninstall deno@`%s` fail", version)
+		for _, f := range files {
+			if f.Name() == version {
+				if err := os.RemoveAll(path.Join(core.ReleaseDir, f.Name())); err != nil {
+					return errors.Wrapf(err, "uninstall deno@`%s` fail", version)
+				}
 			}
 		}
 	}
