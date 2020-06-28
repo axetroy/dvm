@@ -71,10 +71,35 @@ jobs:
           golangci-lint --version
           make lint
 
+  format:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        go: ['^1.14.2']
+        os: [ubuntu-latest]
+    name: Go ${{ matrix.go }} format in ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Environment
+        run: |
+          go version
+          go env
+
+      - name: Format
+        run: |
+          make format-check
+
   release:
     name: Release to Github
     if: startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
-    needs: [lint, build]
+    needs: [lint, format, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v1

@@ -45,7 +45,7 @@ deno v0.26.0
 
 # use another version
 $ dvm install v0.25.0
-$ dvm use v0.25
+$ dvm use v0.25.0
 $ deno --version
 deno v0.25.0
 

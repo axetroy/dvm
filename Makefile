@@ -9,3 +9,6 @@ lint:
 
 format:
 	go fmt ./...
+
+format-check:
+	gofmt -l ./internal main.go
