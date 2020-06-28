@@ -48,10 +48,12 @@ main() {
     # wget -P "${downloadFolder}" "${asset_uri}"
     curl --location --output "${dest_file}" "${asset_uri}"
 
-    echo "[2/3] Install dvm to the ${HOME}/bin"
+    binDir=/usr/local/bin
+
+    echo "[2/3] Install dvm to the ${binDir}"
     mkdir -p ${HOME}/bin
-    tar -xz -f ${dest_file} -C ${HOME}/bin
-    exe=${HOME}/bin/dvm
+    tar -xz -f ${dest_file} -C ${binDir}
+    exe=${binDir}/dvm
     chmod +x ${exe}
 
     echo "[3/3] Set environment variables"

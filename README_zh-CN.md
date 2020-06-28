@@ -45,7 +45,7 @@ deno v0.26.0
 
 # 使用另一个版本的 Deno
 $ dvm install v0.25.0
-$ dvm use v0.25
+$ dvm use v0.25.0
 $ deno --version
 deno v0.25.0
 
@@ -64,7 +64,9 @@ $ dvm --help
 # 安装最新版
 curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # 安装指定版本
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v0.1.0
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.0
+# 从 gobinaries.com 中安装
+curl -sf https://gobinaries.com/axetroy/dvm@v1.2.0 | sh
 ```
 
 或者
