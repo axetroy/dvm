@@ -13,10 +13,8 @@ jobs:
     name: Go ${{ matrix.go }} test in ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go }}
 
