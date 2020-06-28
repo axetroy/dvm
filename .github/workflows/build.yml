@@ -45,6 +45,34 @@ jobs:
 #          go get github.com/mattn/goveralls
 #          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}
 
+  lint:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        go: ['^1.14.2']
+        os: [ubuntu-latest]
+    name: Go ${{ matrix.go }} lint in ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Environment
+        run: |
+          go version
+          go env
+
+      - name: Lint
+        run: |
+          GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.27.0
+          go mod vendor
+          golangci-lint --version
+          make lint
+
   release:
     name: Release to Github
     if: startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'

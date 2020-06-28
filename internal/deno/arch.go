@@ -32,7 +32,6 @@ func GetDenoArch(version string) (*string, error) {
 		} else {
 			denoArch = "x86_64"
 		}
-		break
 	default:
 		return nil, errors.New("not support your platform")
 	}

@@ -3,3 +3,9 @@ test:
 
 build:
 	bash build.sh
+
+lint:
+	golangci-lint run ./... -v
+
+format:
+	go fmt ./...

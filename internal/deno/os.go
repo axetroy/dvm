@@ -29,14 +29,12 @@ func GetDenoOS(version string) (*string, error) {
 		} else {
 			denoOS = "apple-darwin"
 		}
-		break
 	case "windows":
 		if v.LessThan(v1) {
 			denoOS = "win"
 		} else {
 			denoOS = "pc-windows-msvc"
 		}
-		break
 	default:
 		// default to linux
 		if v.LessThan(v1) {
