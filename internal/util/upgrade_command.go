@@ -11,8 +11,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-// upgrade command with new filepath
-func UpgradeCommand(newFilepath, oldFilepath string) (err error) {
+// replace executable file
+// In Windows, if this executable file is running, it cannot be replaced
+func ReplaceExecutableFile(newFilepath, oldFilepath string) (err error) {
 	var (
 		old os.FileInfo
 	)

@@ -58,7 +58,9 @@ func Upgrade(version string, force bool) error {
 
 	fmt.Printf("Upgrade dvm `%s` to `%s`\n", currentDvmVersion, version)
 
-	defer os.RemoveAll(core.CacheDir)
+	defer func() {
+		_ = os.RemoveAll(core.CacheDir)
+	}()
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, util.GetAbortSignals()...)
@@ -77,6 +79,8 @@ func Upgrade(version string, force bool) error {
 		return errors.Wrap(err, "download fail")
 	}
 
+	defer signal.Stop(quit)
+
 	// decompress the tag
 	if err := decompress(tarFilepath, core.CacheDir); err != nil {
 		return errors.Wrap(err, "unzip fail")
@@ -89,7 +93,7 @@ func Upgrade(version string, force bool) error {
 		downloadedDvmFilepath += ".exe"
 	}
 
-	if err := util.UpgradeCommand(downloadedDvmFilepath, dvmExecutablePath); err != nil {
+	if err := util.ReplaceExecutableFile(downloadedDvmFilepath, dvmExecutablePath); err != nil {
 		return errors.Wrap(err, "upgrade fail")
 	}
 
@@ -115,7 +119,9 @@ func decompress(tarFile, dest string) error {
 		return errors.Wrapf(err, "open file `%s` fail", tarFile)
 	}
 
-	defer srcFile.Close()
+	defer func() {
+		_ = srcFile.Close()
+	}()
 
 	gr, err := gzip.NewReader(srcFile)
 
@@ -123,7 +129,9 @@ func decompress(tarFile, dest string) error {
 		return errors.Wrapf(err, "read zip file fail")
 	}
 
-	defer gr.Close()
+	defer func() {
+		_ = gr.Close()
+	}()
 
 	tr := tar.NewReader(gr)
 

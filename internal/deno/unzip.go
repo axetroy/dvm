@@ -34,7 +34,9 @@ func decompressZip(tarFile, dest string) (*string, error) {
 		return nil, err
 	}
 
-	defer src.Close()
+	defer func() {
+		_ = src.Close()
+	}()
 
 	dst, err := os.OpenFile(newFilepath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 
@@ -42,7 +44,9 @@ func decompressZip(tarFile, dest string) (*string, error) {
 		return nil, err
 	}
 
-	defer dst.Close()
+	defer func() {
+		_ = dst.Close()
+	}()
 
 	if _, err := io.Copy(dst, src); err != nil {
 		return nil, err
@@ -58,7 +62,9 @@ func decompressGz(tarFile, dest string) (*string, error) {
 		return nil, errors.Wrapf(err, "open file `%s` fail", tarFile)
 	}
 
-	defer fileReader.Close()
+	defer func() {
+		_ = fileReader.Close()
+	}()
 
 	gzipReader, err := gzip.NewReader(fileReader)
 
@@ -66,7 +72,9 @@ func decompressGz(tarFile, dest string) (*string, error) {
 		return nil, errors.Wrapf(err, "gzip decode fail")
 	}
 
-	defer gzipReader.Close()
+	defer func() {
+		_ = gzipReader.Close()
+	}()
 
 	newFilepath := path.Join(dest, "deno")
 

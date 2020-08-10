@@ -38,7 +38,9 @@ func GetRemoteVersions() ([]string, error) {
 		return nil, errors.Wrapf(err, "request `%s` fail", url)
 	}
 
-	defer r.Body.Close()
+	defer func() {
+		_ = r.Body.Close()
+	}()
 
 	if r.StatusCode >= http.StatusBadRequest {
 		return nil, errors.New(fmt.Sprintf("download file with status code %d", r.StatusCode))

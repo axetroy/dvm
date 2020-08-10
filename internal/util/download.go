@@ -23,7 +23,9 @@ func DownloadFile(filepath string, url string) error {
 		return errors.Wrapf(err, "Download `%s` fail", url)
 	}
 
-	defer response.Body.Close()
+	defer func() {
+		_ = response.Body.Close()
+	}()
 
 	// 404
 	if response.StatusCode == http.StatusNotFound {
