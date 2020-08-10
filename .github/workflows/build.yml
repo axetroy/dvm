@@ -48,7 +48,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        go: ['^1.14.2']
+        go: ['^1.14.7']
         os: [ubuntu-latest]
     name: Go ${{ matrix.go }} lint in ${{ matrix.os }}
 
@@ -76,7 +76,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        go: ['^1.14.2']
+        go: ['^1.14.7']
         os: [ubuntu-latest]
     name: Go ${{ matrix.go }} format in ${{ matrix.os }}
 
