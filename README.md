@@ -64,9 +64,9 @@ If you are using Linux/macOS. you can install it with the following command:
 # install latest version
 curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # or install specified version
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.2
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.3
 # or install from gobinaries.com
-curl -sf https://gobinaries.com/axetroy/dvm@v1.2.2 | sh
+curl -sf https://gobinaries.com/axetroy/dvm@v1.2.3 | sh
 ```
 
 Or

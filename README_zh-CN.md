@@ -64,9 +64,9 @@ $ dvm --help
 # 安装最新版
 curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # 安装指定版本
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.2
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.3
 # 从 gobinaries.com 中安装
-curl -sf https://gobinaries.com/axetroy/dvm@v1.2.2 | sh
+curl -sf https://gobinaries.com/axetroy/dvm@v1.2.3 | sh
 ```
 
 或者
