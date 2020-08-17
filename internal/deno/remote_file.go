@@ -5,20 +5,21 @@ import (
 	"runtime"
 
 	"github.com/Masterminds/semver/v3"
+	"github.com/pkg/errors"
 )
 
 // get remote Deno tar filename
-func GetRemoteTarFilename(version string) (*string, error) {
+func GetRemoteTarFilename(version string) (string, error) {
 	os, err := GetDenoOS(version)
 
 	if err != nil {
-		return nil, err
+		return "", errors.WithStack(err)
 	}
 
 	arch, err := GetDenoArch(version)
 
 	if err != nil {
-		return nil, err
+		return "", errors.WithStack(err)
 	}
 
 	extensionName := "gz"
@@ -30,13 +31,13 @@ func GetRemoteTarFilename(version string) (*string, error) {
 	v, err := semver.NewVersion(version)
 
 	if err != nil {
-		return nil, err
+		return "", errors.WithStack(err)
 	}
 
 	v1, err := semver.NewVersion("0.39.0")
 
 	if err != nil {
-		return nil, err
+		return "", errors.WithStack(err)
 	}
 
 	var filename string
@@ -48,27 +49,24 @@ func GetRemoteTarFilename(version string) (*string, error) {
 		filename = fmt.Sprintf("deno-%s-%s.zip", *arch, *os)
 	}
 
-	return &filename, nil
+	return filename, nil
 }
 
 // get remote Deno tar download URL for specified version
-func GetRemoteDownloadURL(version string) (v string, url string, err error) {
-
-	if version == "latest" {
-		if latest, err := GetLatestRemoteVersion(); err != nil {
-			return "", "", err
-		} else {
-			version = latest
-		}
-	}
-
-	filename, err := GetRemoteTarFilename(version)
+func GetRemoteDownloadURL(version string) (v string, filename string, url string, err error) {
+	_, err = semver.NewVersion(version)
 
 	if err != nil {
-		return "", "", err
+		return "", "", "", nil
 	}
 
-	downloadURL := fmt.Sprintf("https://github.com/denoland/deno/releases/download/%s/%s", version, *filename)
+	filename, err = GetRemoteTarFilename(version)
 
-	return version, downloadURL, nil
+	if err != nil {
+		return "", "", "", errors.WithStack(err)
+	}
+
+	downloadURL := fmt.Sprintf("https://github.com/denoland/deno/releases/download/%s/%s", version, filename)
+
+	return version, filename, downloadURL, nil
 }

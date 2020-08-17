@@ -25,7 +25,7 @@ Features:
 | dvm current                     | Display currently activated version of Deno |
 | dvm ls                          | List installed versions                     |
 | dvm ls-remote                   | List remote versions available for install  |
-| dvm install \<version\>\|latest | Download and install specified Deno version |
+| dvm install \<version\>         | Download and install specified Deno version |
 | dvm uninstall \<version\>       | Uninstall specified Deno version            |
 | dvm use \<version\>             | Use specified Deno version                  |
 | dvm unused                      | Unused Deno                                 |
@@ -40,13 +40,13 @@ Whether you have installed Deno or not will not affect the use of dvm.
 ```bash
 # install
 $ dvm install v0.26.0
-$ deno --version
+$ deno -V
 deno v0.26.0
 
 # use another version
 $ dvm install v0.25.0
 $ dvm use v0.25.0
-$ deno --version
+$ deno -V
 deno v0.25.0
 
 # uninstall deno

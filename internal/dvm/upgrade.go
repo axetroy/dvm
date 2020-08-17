@@ -46,7 +46,7 @@ func Upgrade(version string, force bool) error {
 	dvmExecutablePath, err := os.Executable()
 
 	if err != nil {
-		return err
+		return errors.WithStack(err)
 	}
 
 	currentDvmVersion := GetCurrentUsingVersion()
@@ -76,14 +76,14 @@ func Upgrade(version string, force bool) error {
 	fmt.Printf("Download %s\n", downloadURL)
 
 	if err = util.DownloadFile(tarFilepath, downloadURL); err != nil {
-		return errors.Wrap(err, "download fail")
+		return errors.WithStack(err)
 	}
 
 	defer signal.Stop(quit)
 
 	// decompress the tag
 	if err := decompress(tarFilepath, core.CacheDir); err != nil {
-		return errors.Wrap(err, "unzip fail")
+		return errors.WithStack(err)
 	}
 
 	downloadedDvmFilepath := path.Join(core.CacheDir, "dvm")
@@ -94,7 +94,7 @@ func Upgrade(version string, force bool) error {
 	}
 
 	if err := util.ReplaceExecutableFile(downloadedDvmFilepath, dvmExecutablePath); err != nil {
-		return errors.Wrap(err, "upgrade fail")
+		return errors.WithStack(err)
 	}
 
 	ps := exec.Command(dvmExecutablePath, "--help")
@@ -103,7 +103,7 @@ func Upgrade(version string, force bool) error {
 	ps.Stdout = os.Stdout
 
 	if err := ps.Run(); err != nil {
-		return errors.Wrap(err, "upgrade fail")
+		return errors.WithStack(err)
 	}
 
 	fmt.Printf("dvm upgrade success at `%s`\n", dvmExecutablePath)
@@ -116,7 +116,7 @@ func decompress(tarFile, dest string) error {
 	srcFile, err := os.Open(tarFile)
 
 	if err != nil {
-		return errors.Wrapf(err, "open file `%s` fail", tarFile)
+		return errors.WithStack(err)
 	}
 
 	defer func() {
@@ -126,7 +126,7 @@ func decompress(tarFile, dest string) error {
 	gr, err := gzip.NewReader(srcFile)
 
 	if err != nil {
-		return errors.Wrapf(err, "read zip file fail")
+		return errors.WithStack(err)
 	}
 
 	defer func() {
@@ -143,7 +143,7 @@ func decompress(tarFile, dest string) error {
 		}
 
 		if err != nil {
-			return errors.Wrap(err, "read from zip file fail")
+			return errors.WithStack(err)
 		}
 
 		filename := path.Join(dest, hdr.Name)
@@ -151,13 +151,13 @@ func decompress(tarFile, dest string) error {
 		file, err := os.Create(filename)
 
 		if err != nil {
-			return errors.Wrapf(err, "unzip and create file `%s` fail\n", filename)
+			return errors.WithStack(err)
 		}
 
 		if runtime.GOOS != "windows" {
 			if err := file.Chmod(os.FileMode(hdr.Mode)); err != nil {
 				_ = file.Close()
-				return errors.Wrap(err, "change file mode fail")
+				return errors.WithStack(err)
 			}
 		}
 

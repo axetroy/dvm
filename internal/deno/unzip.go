@@ -15,13 +15,13 @@ func decompressZip(tarFile, dest string) (*string, error) {
 	r, err := zip.OpenReader(tarFile)
 
 	if err != nil {
-		return nil, errors.Wrapf(err, "read zip file `%s` fail", tarFile)
+		return nil, errors.WithStack(err)
 	}
 
 	defer r.Close()
 
 	if len(r.File) > 1 {
-		return nil, errors.New("window .zip file should only contain single file")
+		return nil, errors.WithStack(err)
 	}
 
 	f := r.File[0]
@@ -31,7 +31,7 @@ func decompressZip(tarFile, dest string) (*string, error) {
 	src, err := f.Open()
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	defer func() {
@@ -41,7 +41,7 @@ func decompressZip(tarFile, dest string) (*string, error) {
 	dst, err := os.OpenFile(newFilepath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	defer func() {
@@ -49,7 +49,7 @@ func decompressZip(tarFile, dest string) (*string, error) {
 	}()
 
 	if _, err := io.Copy(dst, src); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	return &newFilepath, nil
@@ -59,7 +59,7 @@ func decompressGz(tarFile, dest string) (*string, error) {
 	fileReader, err := os.Open(tarFile)
 
 	if err != nil {
-		return nil, errors.Wrapf(err, "open file `%s` fail", tarFile)
+		return nil, errors.WithStack(err)
 	}
 
 	defer func() {
@@ -69,7 +69,7 @@ func decompressGz(tarFile, dest string) (*string, error) {
 	gzipReader, err := gzip.NewReader(fileReader)
 
 	if err != nil {
-		return nil, errors.Wrapf(err, "gzip decode fail")
+		return nil, errors.WithStack(err)
 	}
 
 	defer func() {
@@ -81,7 +81,7 @@ func decompressGz(tarFile, dest string) (*string, error) {
 	fileWriter, err := os.Create(newFilepath)
 
 	if err != nil {
-		return nil, errors.Wrapf(err, "create file `%s` fail", newFilepath)
+		return nil, errors.WithStack(err)
 	}
 
 	defer func() {
@@ -97,7 +97,7 @@ func decompressGz(tarFile, dest string) (*string, error) {
 	}
 
 	if err := fileWriter.Chmod(os.FileMode(0755)); err != nil {
-		return nil, errors.Wrap(err, "change file mod fail")
+		return nil, errors.WithStack(err)
 	}
 
 	return &newFilepath, nil

@@ -16,21 +16,15 @@ import (
 
 // install Deno
 func Install(version string) error {
-	filename, err := deno.GetRemoteTarFilename(version)
+	v, filename, downloadURL, err := deno.GetRemoteDownloadURL(version)
 
 	if err != nil {
-		return errors.Wrap(err, "get remote tar filename fail")
-	}
-
-	v, downloadURL, err := deno.GetRemoteDownloadURL(version)
-
-	if err != nil {
-		return errors.Wrap(err, "get remote download url fail")
+		return errors.WithStack(err)
 	}
 
 	version = v
 
-	cacheFilepath := path.Join(core.CacheDir, *filename)
+	cacheFilepath := path.Join(core.CacheDir, filename)
 
 	quitAndCleanCache := make(chan os.Signal)
 	signal.Notify(quitAndCleanCache, util.GetAbortSignals()...)

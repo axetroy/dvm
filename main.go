@@ -45,11 +45,10 @@ VERSION:
     {{.Version}}
     {{end}}
 EXAMPLES:
-    {{.Name}} install v0.26.0
-    {{.Name}} install latest
-    {{.Name}} use v0.26.0
-    {{.Name}} uninstall v0.26.0
-    {{.Name}} exec v0.26.0 https://deno.land/std/examples/welcome.ts
+    {{.Name}} install v1.0.0
+    {{.Name}} use v1.0.0
+    {{.Name}} uninstall v1.0.0
+    {{.Name}} exec v1.0.0 https://deno.land/std/examples/welcome.ts
     {{.Name}} ls
     {{.Name}} ls-remote
 
@@ -82,7 +81,7 @@ SOURCE CODE:
 		{
 			Name:      "install",
 			Usage:     "Download and install specified Deno version",
-			ArgsUsage: "<version> | latest",
+			ArgsUsage: "<version>",
 			Aliases:   []string{"i"},
 			Action: func(c *cli.Context) error {
 				if c.Args().Len() == 0 {

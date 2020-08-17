@@ -16,7 +16,7 @@ func GetLatestRemoteVersion() (string, error) {
 	versions, err := GetRemoteVersions()
 
 	if err != nil {
-		return "", errors.Wrap(err, "get remote versions fail")
+		return "", errors.WithStack(err)
 	}
 
 	if len(versions) == 0 {

@@ -5,30 +5,32 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+
+	"github.com/pkg/errors"
 )
 
 // copy a file or dir
-func Copy(dest, src string) (err error) {
-
+func Copy(dest, src string) error {
 	var (
 		srcFile    *os.File
 		targetFile *os.File
 		fileInfo   os.FileInfo
 		files      []os.FileInfo
+		err        error
 	)
 
 	if fileInfo, err = os.Stat(src); err != nil {
-		return
+		return errors.WithStack(err)
 	}
 
 	if fileInfo.IsDir() {
 		// read dir and copy one by one
 		if files, err = ioutil.ReadDir(src); err != nil {
-			return
+			return errors.WithStack(err)
 		}
 
 		if err = EnsureDir(dest); err != nil {
-			return
+			return errors.WithStack(err)
 		}
 
 		for _, file := range files {
@@ -36,24 +38,31 @@ func Copy(dest, src string) (err error) {
 			src = path.Join(src, filename)
 			dest = path.Join(dest, filename)
 			if err = Copy(dest, src); err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 		}
 
 	} else {
 		if srcFile, err = os.Open(src); err != nil {
-			return
+			return errors.WithStack(err)
 		}
 
-		defer srcFile.Close()
+		defer func() {
+			_ = srcFile.Close()
+		}()
 
 		if targetFile, err = os.Create(dest); err != nil {
-			return
+			return errors.WithStack(err)
 		}
 
-		defer targetFile.Close()
+		defer func() {
+			_ = targetFile.Close()
+		}()
 
-		_, err = io.Copy(targetFile, srcFile)
+		if _, err = io.Copy(targetFile, srcFile); err != nil {
+			return errors.WithStack(err)
+		}
 	}
-	return
+
+	return nil
 }

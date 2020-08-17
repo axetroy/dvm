@@ -4,6 +4,7 @@ import (
 	"runtime"
 
 	"github.com/Masterminds/semver/v3"
+	"github.com/pkg/errors"
 )
 
 // get Deno os for current platform
@@ -13,13 +14,13 @@ func GetDenoOS(version string) (*string, error) {
 	v, err := semver.NewVersion(version)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	v1, err := semver.NewVersion("0.39.0")
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	switch runtime.GOOS {

@@ -14,13 +14,13 @@ func GetDenoArch(version string) (*string, error) {
 	v, err := semver.NewVersion(version)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	v1, err := semver.NewVersion("0.39.0")
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	switch runtime.GOARCH {

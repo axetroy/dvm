@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        go: ['^1.14.7']
+        go: ['^1.15.0']
         os: [ubuntu-latest, macOS-latest, windows-latest]
     name: Go ${{ matrix.go }} test in ${{ matrix.os }}
     steps:
@@ -48,7 +48,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        go: ['^1.14.7']
+        go: ['^1.15.0']
         os: [ubuntu-latest]
     name: Go ${{ matrix.go }} lint in ${{ matrix.os }}
 
@@ -76,7 +76,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        go: ['^1.14.7']
+        go: ['^1.15.0']
         os: [ubuntu-latest]
     name: Go ${{ matrix.go }} format in ${{ matrix.os }}
 
