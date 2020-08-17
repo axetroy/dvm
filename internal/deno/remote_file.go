@@ -57,7 +57,7 @@ func GetRemoteDownloadURL(version string) (v string, filename string, url string
 	_, err = semver.NewVersion(version)
 
 	if err != nil {
-		return "", "", "", nil
+		return "", "", "", errors.WithStack(err)
 	}
 
 	filename, err = GetRemoteTarFilename(version)
