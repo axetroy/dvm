@@ -25,7 +25,7 @@
 | dvm current                     | 显示正在使用的 Deno 版本         |
 | dvm ls                          | 列出已安装的 Deno 版本           |
 | dvm ls-remote                   | 列出远程可安装的 Deno 版本       |
-| dvm install \<version\>\        | 下载并安装指定的 Deno 版本       |
+| dvm install \<version\>        | 下载并安装指定的 Deno 版本       |
 | dvm uninstall \<version\>       | 卸载指定的 Deno 版本             |
 | dvm use \<version\>             | 使用指定的 Deno 版本             |
 | dvm unused                      | 禁用 Deno                        |
@@ -115,6 +115,8 @@ $ dvm destroy
 ```
 
 ### 从源码构建
+
+请确保你已安装 `Golang@v1.15.x`.
 
 ```bash
 > go get -v -u github.com/axetroy/dvm
