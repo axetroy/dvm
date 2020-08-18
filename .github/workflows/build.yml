@@ -1,16 +1,16 @@
-name: test
+name: ci
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  ci:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
       matrix:
-        go: ['^1.15.0']
+        go: ["^1.15.0"]
         os: [ubuntu-latest, macOS-latest, windows-latest]
-    name: Go ${{ matrix.go }} test in ${{ matrix.os }}
+    name: Go ${{ matrix.go }} in ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
@@ -22,6 +22,20 @@ jobs:
         run: |
           go version
           go env
+
+      - name: Install tools
+        env:
+          GO111MODULE: on
+        run: |
+          go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.27.0
+          golangci-lint --version
+
+      - name: Lint
+        run: make lint
+
+      - name: Format
+        run: |
+          make format-check
 
       - name: Test
         run: make test
@@ -43,63 +57,10 @@ jobs:
   #          go get github.com/mattn/goveralls
   #          /home/runner/go/bin/goveralls -coverprofile=coverage.out -service=github-action -repotoken ${{ secrets.COVERALLS_TOKEN }}
 
-  lint:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        go: ['^1.15.0']
-        os: [ubuntu-latest]
-    name: Go ${{ matrix.go }} lint in ${{ matrix.os }}
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go }}
-
-      - name: Environment
-        run: |
-          go version
-          go env
-
-      - name: Lint
-        run: |
-          GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.27.0
-          go mod vendor
-          golangci-lint --version
-          make lint
-
-  format:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        go: ['^1.15.0']
-        os: [ubuntu-latest]
-    name: Go ${{ matrix.go }} format in ${{ matrix.os }}
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go }}
-
-      - name: Environment
-        run: |
-          go version
-          go env
-
-      - name: Format
-        run: |
-          make format-check
-
   release:
     name: Release to Github
     if: startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
-    needs: [lint, format, build]
+    needs: [ci]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v1

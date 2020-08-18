@@ -1,6 +1,6 @@
 [English](README.md) | 中文简体
 
-[![Build Status](https://github.com/axetroy/dvm/workflows/test/badge.svg)](https://github.com/axetroy/dvm/actions)
+[![Build Status](https://github.com/axetroy/dvm/workflows/ci/badge.svg)](https://github.com/axetroy/dvm/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/axetroy/dvm)](https://goreportcard.com/report/github.com/axetroy/dvm)
 ![Latest Version](https://img.shields.io/github/v/release/axetroy/dvm.svg)
 ![License](https://img.shields.io/github/license/axetroy/dvm.svg)
@@ -25,7 +25,7 @@
 | dvm current                     | 显示正在使用的 Deno 版本         |
 | dvm ls                          | 列出已安装的 Deno 版本           |
 | dvm ls-remote                   | 列出远程可安装的 Deno 版本       |
-| dvm install \<version\>        | 下载并安装指定的 Deno 版本       |
+| dvm install \<version\>         | 下载并安装指定的 Deno 版本       |
 | dvm uninstall \<version\>       | 卸载指定的 Deno 版本             |
 | dvm use \<version\>             | 使用指定的 Deno 版本             |
 | dvm unused                      | 禁用 Deno                        |
