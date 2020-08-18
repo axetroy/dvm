@@ -27,7 +27,7 @@ func Upgrade(version string, force bool) error {
 		tarFilepath = path.Join(core.CacheDir, tarFilename)
 	)
 
-	if version == "" || version == "latest" {
+	if version == "" {
 		if v, err := GetLatestRemoteVersion(); err != nil {
 			return errors.WithStack(err)
 		} else {
