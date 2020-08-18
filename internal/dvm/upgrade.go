@@ -12,6 +12,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/util"
 	"github.com/fatih/color"
@@ -28,10 +29,16 @@ func Upgrade(version string, force bool) error {
 
 	if version == "" || version == "latest" {
 		if v, err := GetLatestRemoteVersion(); err != nil {
-			return errors.Wrap(err, "get latest version fail")
+			return errors.WithStack(err)
 		} else {
 			version = v
 		}
+	}
+
+	_, err = semver.NewVersion(version)
+
+	if err != nil {
+		return errors.WithStack(err)
 	}
 
 	downloadURL := fmt.Sprintf("https://github.com/axetroy/dvm/releases/download/%s/%s", version, tarFilename)
