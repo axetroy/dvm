@@ -23,11 +23,15 @@ jobs:
           go version
           go env
 
+      - name: Install tools
+        env:
+          GO111MODULE: on
+        run: |
+          go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.27.0
+          golangci-lint --version
+
       - name: Lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v1.29
+        run: make lint
 
       - name: Format
         run: |
