@@ -43,7 +43,7 @@ jobs:
       - name: Build
         run: make build
 
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         if: runner.os == 'linux'
         with:
           name: bin
