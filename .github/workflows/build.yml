@@ -66,6 +66,9 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: bin
+          path: ./bin
+
+      - run: ls -R
 
       - uses: softprops/action-gh-release@v1
         env:
