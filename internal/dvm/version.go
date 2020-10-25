@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	version = "1.2.4"
+	version = "1.2.5"
 )
 
 // get current using dvm version with `v` prefix
