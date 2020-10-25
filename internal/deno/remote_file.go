@@ -54,6 +54,12 @@ func GetRemoteTarFilename(version string) (string, error) {
 
 // get remote Deno tar download URL for specified version
 func GetRemoteDownloadURL(version string) (v string, filename string, url string, err error) {
+	if version == "latest" {
+		if version, err = GetLatestRemoteVersion(); err != nil {
+			return "", "", "", errors.WithStack(err)
+		}
+	}
+
 	_, err = semver.NewVersion(version)
 
 	if err != nil {

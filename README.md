@@ -20,18 +20,18 @@ Features:
 - [x] Zero configuration
 - [x] Fully compatible with installed Deno
 
-| Command                         | Description                                 |
-| ------------------------------- | ------------------------------------------- |
-| dvm current                     | Display currently activated version of Deno |
-| dvm ls                          | List installed versions                     |
-| dvm ls-remote                   | List remote versions available for install  |
-| dvm install \<version\>         | Download and install specified Deno version |
-| dvm uninstall \<version\>       | Uninstall specified Deno version            |
-| dvm use \<version\>             | Use specified Deno version                  |
-| dvm unused                      | Unused Deno                                 |
-| dvm exec \<version\> [commands] | Run Deno command on \<version\>             |
-| dvm upgrade [version]           | Upgrade dvm                                 |
-| dvm destroy                     | Uninstall dvm                               |
+| Command                           | Description                                        |
+| --------------------------------- | -------------------------------------------------- |
+| dvm current                       | Display currently activated version of Deno        |
+| dvm ls                            | List installed versions                            |
+| dvm ls-remote                     | List remote versions available for install         |
+| dvm install \<version\> \| latest | Download and install specified/latest Deno version |
+| dvm uninstall \<version\>         | Uninstall specified Deno version                   |
+| dvm use \<version\>               | Use specified Deno version                         |
+| dvm unused                        | Unused Deno                                        |
+| dvm exec \<version\> [commands]   | Run Deno command on \<version\>                    |
+| dvm upgrade [version]             | Upgrade dvm                                        |
+| dvm destroy                       | Uninstall dvm                                      |
 
 ### Usage
 

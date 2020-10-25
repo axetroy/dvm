@@ -20,18 +20,18 @@
 - [x] 零配置
 - [x] 完全兼容已安装的 Deno
 
-| 命令                            | 描述                             |
-| ------------------------------- | -------------------------------- |
-| dvm current                     | 显示正在使用的 Deno 版本         |
-| dvm ls                          | 列出已安装的 Deno 版本           |
-| dvm ls-remote                   | 列出远程可安装的 Deno 版本       |
-| dvm install \<version\>         | 下载并安装指定的 Deno 版本       |
-| dvm uninstall \<version\>       | 卸载指定的 Deno 版本             |
-| dvm use \<version\>             | 使用指定的 Deno 版本             |
-| dvm unused                      | 禁用 Deno                        |
-| dvm exec \<version\> [commands] | 以指定的 Deno 版本运行 Deno 命令 |
-| dvm upgrade [version]           | 升级 dvm                         |
-| dvm destroy                     | 卸载 dvm                         |
+| 命令                              | 描述                             |
+| --------------------------------- | -------------------------------- |
+| dvm current                       | 显示正在使用的 Deno 版本         |
+| dvm ls                            | 列出已安装的 Deno 版本           |
+| dvm ls-remote                     | 列出远程可安装的 Deno 版本       |
+| dvm install \<version\> \| latest | 下载并安装指定/最新的 Deno 版本  |
+| dvm uninstall \<version\>         | 卸载指定的 Deno 版本             |
+| dvm use \<version\>               | 使用指定的 Deno 版本             |
+| dvm unused                        | 禁用 Deno                        |
+| dvm exec \<version\> [commands]   | 以指定的 Deno 版本运行 Deno 命令 |
+| dvm upgrade [version]             | 升级 dvm                         |
+| dvm destroy                       | 卸载 dvm                         |
 
 ### 使用方法
 
