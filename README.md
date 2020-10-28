@@ -1,3 +1,9 @@
+<div align="center">
+
+![dvm](https://socialify.git.ci/axetroy/dvm/image?description=1&font=KoHo&forks=1&issues=1&language=1&logo=https%3A%2F%2Fdeno.land%2Flogo.svg&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
+
+</div>
+
 English | [中文简体](README_zh-CN.md)
 
 [![Build Status](https://github.com/axetroy/dvm/workflows/ci/badge.svg)](https://github.com/axetroy/dvm/actions)
