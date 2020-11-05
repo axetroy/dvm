@@ -1,4 +1,4 @@
-# github.com/AlecAivazis/survey/v2 v2.2.0
+# github.com/AlecAivazis/survey/v2 v2.2.1
 github.com/AlecAivazis/survey/v2
 github.com/AlecAivazis/survey/v2/core
 github.com/AlecAivazis/survey/v2/terminal
