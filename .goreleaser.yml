@@ -1,0 +1,11 @@
+builds:
+  - binary: dvm
+    goos:
+      - windows
+      - darwin
+      - linux
+      - openbsd
+      - freebsd
+    goarch:
+      - amd64
+      - arm64
