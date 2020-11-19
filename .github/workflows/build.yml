@@ -41,6 +41,7 @@ jobs:
         run: |
           make test
           go mod tidy
+          git checkout ./
 
       - name: Build
         uses: goreleaser/goreleaser-action@v2
