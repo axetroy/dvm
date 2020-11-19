@@ -20,6 +20,7 @@ var (
 )
 
 func init() {
+	dvm.SetVersion(version)
 	os.Setenv("DVM_VERSION", version)
 	os.Setenv("DVM_COMMIT", commit)
 	os.Setenv("DVM_DATE", date)

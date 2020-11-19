@@ -18,6 +18,11 @@ func init() {
 	version = os.Getenv("DVM_VERSION")
 }
 
+// set version without prefix
+func SetVersion(v string) {
+	version = v
+}
+
 // get current using dvm version with `v` prefix
 func GetCurrentUsingVersion() string {
 	return "v" + version
