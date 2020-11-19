@@ -38,7 +38,9 @@ jobs:
           make format-check
 
       - name: Test
-        run: make test
+        run: |
+          make test
+          go mod tidy
 
       - name: Build
         uses: goreleaser/goreleaser-action@v2
@@ -52,6 +54,8 @@ jobs:
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
