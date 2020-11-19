@@ -12,12 +12,26 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+	builtBy = "unknown"
+)
+
+func init() {
+	os.Setenv("DVM_VERSION", version)
+	os.Setenv("DVM_COMMIT", commit)
+	os.Setenv("DVM_DATE", date)
+	os.Setenv("DVM_BUILD_BY", builtBy)
+}
+
 func main() {
 	app := cli.NewApp()
 
 	app.Name = "dvm"
 	app.Usage = "version manager for Deno"
-	app.Version = dvm.GetCurrentUsingVersion()
+	app.Version = fmt.Sprintf("%s %s %s", dvm.GetCurrentUsingVersion(), commit, date)
 	app.Authors = []*cli.Author{
 		{
 			Name:  "Axetroy",

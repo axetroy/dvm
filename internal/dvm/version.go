@@ -5,13 +5,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/pkg/errors"
 )
 
-const (
-	version = "1.2.5"
+var (
+	version string
 )
+
+func init() {
+	version = os.Getenv("DVM_VERSION")
+}
 
 // get current using dvm version with `v` prefix
 func GetCurrentUsingVersion() string {

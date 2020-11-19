@@ -8,4 +8,19 @@ builds:
       - freebsd
     goarch:
       - amd64
+      - arm
       - arm64
+      - 386
+    goarm:
+      - 6
+      - 7
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -mod=vendor
+      - -trimpath
+
+archives:
+  - files:
+      - none*
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}"

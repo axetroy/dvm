@@ -2,7 +2,7 @@ test:
 	go test --cover -covermode=count -coverprofile=coverage.out ./...
 
 build:
-	bash build.sh
+	goreleaser release --snapshot --rm-dist --skip-publish
 
 lint:
 	golangci-lint run ./... -v
