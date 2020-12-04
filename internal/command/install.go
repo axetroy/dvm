@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"path"
+	"path/filepath"
 
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/deno"
@@ -24,7 +24,7 @@ func Install(version string) error {
 
 	version = v
 
-	cacheFilepath := path.Join(core.CacheDir, filename)
+	cacheFilepath := filepath.Join(core.CacheDir, filename)
 
 	quitAndCleanCache := make(chan os.Signal)
 	signal.Notify(quitAndCleanCache, util.GetAbortSignals()...)
@@ -47,13 +47,13 @@ func Install(version string) error {
 		return errors.Wrapf(err, "download remote file `%s` fail", downloadURL)
 	}
 
-	denoFilepath, err := deno.Unzip(cacheFilepath, path.Dir(cacheFilepath))
+	denoFilepath, err := deno.Unzip(cacheFilepath, filepath.Dir(cacheFilepath))
 
 	if err != nil {
 		return errors.Wrap(err, "unzip tar file fail")
 	}
 
-	currentVersionWorkspaceDir := path.Join(core.ReleaseDir, version)
+	currentVersionWorkspaceDir := filepath.Join(core.ReleaseDir, version)
 
 	if err := fs.EnsureDir(currentVersionWorkspaceDir); err != nil {
 		return errors.Wrap(err, "ensure workspace fail")
@@ -79,7 +79,7 @@ func Install(version string) error {
 		}
 	}()
 
-	newDenoFilepath := path.Join(currentVersionWorkspaceDir, path.Base(*denoFilepath))
+	newDenoFilepath := filepath.Join(currentVersionWorkspaceDir, filepath.Base(*denoFilepath))
 
 	if err := os.Rename(*denoFilepath, newDenoFilepath); err != nil {
 		return errors.Wrapf(err, "rename Deno executable file fail. try move `%s` to `%s` by manual", *denoFilepath, newDenoFilepath)

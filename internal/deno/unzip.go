@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 )
@@ -26,7 +26,7 @@ func decompressZip(tarFile, dest string) (*string, error) {
 
 	f := r.File[0]
 
-	newFilepath := path.Join(dest, f.Name)
+	newFilepath := filepath.Join(dest, f.Name)
 
 	src, err := f.Open()
 
@@ -76,7 +76,7 @@ func decompressGz(tarFile, dest string) (*string, error) {
 		_ = gzipReader.Close()
 	}()
 
-	newFilepath := path.Join(dest, "deno")
+	newFilepath := filepath.Join(dest, "deno")
 
 	fileWriter, err := os.Create(newFilepath)
 
@@ -104,7 +104,7 @@ func decompressGz(tarFile, dest string) (*string, error) {
 }
 
 func Unzip(tarFilepath, destDir string) (*string, error) {
-	switch path.Ext(tarFilepath) {
+	switch filepath.Ext(tarFilepath) {
 	case ".zip":
 		return decompressZip(tarFilepath, destDir)
 	case ".gz":

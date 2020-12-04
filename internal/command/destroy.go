@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/axetroy/dvm/internal/core"
@@ -32,7 +32,7 @@ func Destroy() error {
 	}
 
 	// remove $HOME/.deno/bin/deno
-	currentUseDenoFilepath := path.Join(core.DenoBinDir, core.ExecutableFilename)
+	currentUseDenoFilepath := filepath.Join(core.DenoBinDir, core.ExecutableFilename)
 	if err := os.RemoveAll(currentUseDenoFilepath); err != nil {
 		return errors.Wrapf(err, "remove `$HOME/.deno/bin/%s` fail", core.ExecutableFilename)
 	}

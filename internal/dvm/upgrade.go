@@ -8,7 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
-	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -24,7 +24,7 @@ func Upgrade(version string, force bool) error {
 	var (
 		err         error
 		tarFilename = fmt.Sprintf("dvm_%s_%s.tar.gz", runtime.GOOS, runtime.GOARCH)
-		tarFilepath = path.Join(core.CacheDir, tarFilename)
+		tarFilepath = filepath.Join(core.CacheDir, tarFilename)
 	)
 
 	if version == "" {
@@ -93,7 +93,7 @@ func Upgrade(version string, force bool) error {
 		return errors.WithStack(err)
 	}
 
-	downloadedDvmFilepath := path.Join(core.CacheDir, "dvm")
+	downloadedDvmFilepath := filepath.Join(core.CacheDir, "dvm")
 
 	if runtime.GOOS == "windows" && !strings.HasSuffix(downloadedDvmFilepath, ".exe") {
 		// Ensure to add '.exe' to given path on Windows
@@ -153,7 +153,7 @@ func decompress(tarFile, dest string) error {
 			return errors.WithStack(err)
 		}
 
-		filename := path.Join(dest, hdr.Name)
+		filename := filepath.Join(dest, hdr.Name)
 
 		file, err := os.Create(filename)
 

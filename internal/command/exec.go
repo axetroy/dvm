@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/fatih/color"
@@ -24,7 +24,7 @@ func Exec(version string, args []string) error {
 
 	for _, f := range files {
 		if f.Name() == version {
-			denoPath = path.Join(core.ReleaseDir, version, core.ExecutableFilename)
+			denoPath = filepath.Join(core.ReleaseDir, version, core.ExecutableFilename)
 		}
 	}
 

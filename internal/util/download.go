@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/axetroy/dvm/internal/fs"
 	"github.com/cheggaaa/pb/v3"
@@ -13,7 +13,7 @@ import (
 )
 
 // Download file from URL to the filepath
-func DownloadFile(filepath string, url string) error {
+func DownloadFile(filepathStr string, url string) error {
 	tmpl := fmt.Sprintf(`{{string . "prefix"}}{{ "%s" }} {{counters . }} {{ bar . "[" "=" ">" "-" "]"}} {{percent . }} {{speed . }}{{string . "suffix"}}`, filepath)
 
 	// Get the data
@@ -36,22 +36,22 @@ func DownloadFile(filepath string, url string) error {
 		return errors.New(fmt.Sprintf("download file with status code %d", response.StatusCode))
 	}
 
-	if err := fs.EnsureDir(path.Dir(filepath)); err != nil {
-		return errors.Wrapf(err, "ensure `%s` fail", path.Dir(filepath))
+	if err := fs.EnsureDir(filepath.Dir(filepathStr)); err != nil {
+		return errors.Wrapf(err, "ensure `%s` fail", filepath.Dir(filepathStr))
 	}
 
 	// Create the file
-	writer, err := os.Create(filepath)
+	writer, err := os.Create(filepathStr)
 
 	if err != nil {
-		return errors.Wrapf(err, "Create `%s` fail", filepath)
+		return errors.Wrapf(err, "Create `%s` fail", filepathStr)
 	}
 
 	defer func() {
 		err = writer.Close()
 
 		if err != nil {
-			_ = os.Remove(filepath)
+			_ = os.Remove(filepathStr)
 		}
 	}()
 

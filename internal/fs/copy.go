@@ -4,7 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 )
@@ -35,8 +35,8 @@ func Copy(dest, src string) error {
 
 		for _, file := range files {
 			filename := file.Name()
-			src = path.Join(src, filename)
-			dest = path.Join(dest, filename)
+			src = filepath.Join(src, filename)
+			dest = filepath.Join(dest, filename)
 			if err = Copy(dest, src); err != nil {
 				return errors.WithStack(err)
 			}

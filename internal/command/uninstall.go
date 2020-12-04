@@ -3,7 +3,7 @@ package command
 import (
 	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/deno"
@@ -20,7 +20,7 @@ func Uninstall(versions []string) error {
 
 	for _, version := range versions {
 		if currentUseVersion != nil && *currentUseVersion == version {
-			if err := os.Remove(path.Join(core.DenoBinDir, core.ExecutableFilename)); err != nil {
+			if err := os.Remove(filepath.Join(core.DenoBinDir, core.ExecutableFilename)); err != nil {
 				return err
 			}
 		}
@@ -33,7 +33,7 @@ func Uninstall(versions []string) error {
 
 		for _, f := range files {
 			if f.Name() == version {
-				if err := os.RemoveAll(path.Join(core.ReleaseDir, f.Name())); err != nil {
+				if err := os.RemoveAll(filepath.Join(core.ReleaseDir, f.Name())); err != nil {
 					return errors.Wrapf(err, "uninstall deno@`%s` fail", version)
 				}
 			}

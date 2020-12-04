@@ -3,7 +3,7 @@ package util
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 	"time"
 
@@ -26,7 +26,7 @@ func ReplaceExecutableFile(newFilepath, oldFilepath string) (err error) {
 
 	// cover the binary file
 	if runtime.GOOS == "windows" {
-		oldFilepathBackup := path.Join(core.CacheDir, old.Name()) + fmt.Sprintf(".%d.old", time.Now().UnixNano())
+		oldFilepathBackup := filepath.Join(core.CacheDir, old.Name()) + fmt.Sprintf(".%d.old", time.Now().UnixNano())
 		if err = os.Rename(oldFilepath, oldFilepathBackup); err != nil {
 			return errors.Wrapf(err, "backup old version fail")
 		}

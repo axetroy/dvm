@@ -2,14 +2,14 @@ package fs
 
 import (
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 )
 
 // ensure dir exist
 func EnsureDir(dir string) error {
-	parent := path.Dir(dir)
+	parent := filepath.Dir(dir)
 	if _, err := os.Stat(parent); err != nil {
 		if os.IsNotExist(err) {
 			if err := EnsureDir(parent); err != nil {

@@ -3,7 +3,7 @@ package core
 import (
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 
 	"github.com/axetroy/dvm/internal/fs"
@@ -40,9 +40,9 @@ func init() {
 		HomeDir = h
 	}
 
-	DenoBinDir = path.Join(HomeDir, ".deno", "bin")
-	RootDir = path.Join(HomeDir, ".dvm")
-	ReleaseDir = path.Join(RootDir, "releases")
+	DenoBinDir = filepath.Join(HomeDir, ".deno", "bin")
+	RootDir = filepath.Join(HomeDir, ".dvm")
+	ReleaseDir = filepath.Join(RootDir, "releases")
 
 	if e := fs.EnsureDir(DenoBinDir); e != nil {
 		err = e
@@ -58,7 +58,7 @@ func init() {
 		err = e
 		return
 	} else {
-		CacheDir = path.Join(c, "dvm")
+		CacheDir = filepath.Join(c, "dvm")
 
 		if e := fs.EnsureDir(CacheDir); e != nil {
 			err = e

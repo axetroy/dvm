@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 
 	"github.com/axetroy/dvm/internal/core"
@@ -28,7 +28,7 @@ func Use(version string) error {
 
 		if v == version {
 			match = true
-			oldDenoFilepath := path.Join(core.DenoBinDir, core.ExecutableFilename)
+			oldDenoFilepath := filepath.Join(core.DenoBinDir, core.ExecutableFilename)
 
 			// remove it before anyway
 			if err := os.Remove(oldDenoFilepath); err != nil {
@@ -37,7 +37,7 @@ func Use(version string) error {
 				}
 			}
 
-			p := path.Join(core.ReleaseDir, v, core.ExecutableFilename)
+			p := filepath.Join(core.ReleaseDir, v, core.ExecutableFilename)
 
 			if err := os.Symlink(p, oldDenoFilepath); err != nil {
 				// Windows requires permission for soft link
