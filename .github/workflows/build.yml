@@ -66,6 +66,7 @@ jobs:
       - name: Generate changelog
         run: |
           whatchanged --tpl=release.tpl --output=release.md
+          cat release.md
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
