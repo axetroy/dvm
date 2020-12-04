@@ -56,11 +56,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: axetroy/setup-whatchanged@v1
+        with:
+            version: v0.2.2
+
+      - name: Generate changelog
+        run: |
+          whatchanged --tpl=release.tpl --output=release.md
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist
+          args: release --rm-dist --release-notes=./release.md
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
