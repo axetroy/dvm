@@ -14,7 +14,7 @@ import (
 
 // Download file from URL to the filepath
 func DownloadFile(filepathStr string, url string) error {
-	tmpl := fmt.Sprintf(`{{string . "prefix"}}{{ "%s" }} {{counters . }} {{ bar . "[" "=" ">" "-" "]"}} {{percent . }} {{speed . }}{{string . "suffix"}}`, filepath)
+	tmpl := fmt.Sprintf(`{{string . "prefix"}}{{ "%s" }} {{counters . }} {{ bar . "[" "=" ">" "-" "]"}} {{percent . }} {{speed . }}{{string . "suffix"}}`, filepathStr)
 
 	// Get the data
 	response, err := http.Get(url)
