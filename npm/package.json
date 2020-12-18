@@ -1,0 +1,25 @@
+{
+  "name": "@axetroy/dvm",
+  "version": "0.0.0",
+  "description": "Fast and simple version manger for Deno without runtime dependencies",
+  "bin": {
+    "dvm": "./bin/dvm"
+  },
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "bin/dvm",
+    "scripts/postinstall.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "author": "Axetroy",
+  "license": "MIT",
+  "dependencies": {
+    "download": "8.0.0",
+    "progress": "2.0.3"
+  }
+}

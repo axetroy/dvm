@@ -1,0 +1,7 @@
+node_modules
+*.lock
+package-lock.json
+dist
+dvm
+dvm.exe
+scripts/bump.js

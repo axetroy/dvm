@@ -75,3 +75,18 @@ jobs:
           args: release --rm-dist --release-notes=./release.md
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Prepare publish
+        env:
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          cp README.md ./npm/README.md
+          cp release.md ./npm/CHANGELOG.md
+          cp LICENSE ./npm/LICENSE
+          node ./npm/scripts/bump.js
+
+      - name: Publish to NPM
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: ./npm/package.json
+          token: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,6 @@
+./bin/dvm
+./bin/dvm.exe
+*-lock.json
+*.lock
+node_modules
+.DS_Store
