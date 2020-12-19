@@ -5,6 +5,10 @@
   "bin": {
     "dvm": "./bin/dvm"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axetroy/dvm.git"
+  },
   "files": [
     "README.md",
     "CHANGELOG.md",
