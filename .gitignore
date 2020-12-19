@@ -15,7 +15,6 @@
 # vendor/
 
 .idea
-bin
 dist
 release.md
 .DS_Store
