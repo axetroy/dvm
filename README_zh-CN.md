@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/axetroy/dvm/workflows/ci/badge.svg)](https://github.com/axetroy/dvm/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/axetroy/dvm)](https://goreportcard.com/report/github.com/axetroy/dvm)
 ![Latest Version](https://img.shields.io/github/v/release/axetroy/dvm.svg)
-![License](https://img.shields.io/github/license/axetroy/dvm.svg)
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 ![Repo Size](https://img.shields.io/github/repo-size/axetroy/dvm.svg)
 
 ## dvm
@@ -144,4 +144,4 @@ $ make test
 
 ### 开源许可
 
-The [MIT License](LICENSE)
+The [Anti-996 LICENSE](LICENSE_zh-CN)
