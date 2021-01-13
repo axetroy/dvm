@@ -61,7 +61,7 @@ jobs:
 
       - uses: axetroy/setup-whatchanged@v1
         with:
-            version: v0.3.2
+            version: v0.3.4
 
       - name: Generate changelog
         run: |
