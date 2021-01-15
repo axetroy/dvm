@@ -68,9 +68,9 @@ npm install @axetroy/dvm -g
 
 ```shell
 # 安装最新版
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
+curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # 安装指定版本
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.5
+curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.2.5
 # 从 gobinaries.com 中安装
 curl -sf https://gobinaries.com/axetroy/dvm@v1.2.5 | sh
 ```
