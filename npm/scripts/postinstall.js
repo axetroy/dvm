@@ -52,7 +52,7 @@ async function install(version) {
     total: 0,
   });
 
-  await download(url, path.join(__dirname, "..", "bin"), {
+  await download(url, path.join(__dirname, "..", "download"), {
     extract: true,
   }).on("response", (res) => {
     bar.total = res.headers["content-length"];
