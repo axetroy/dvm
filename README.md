@@ -64,7 +64,7 @@ $ dvm --help
 
 ### Installation
 
-If you have installed nodejs, you can install it vi npm
+If you have installed nodejs, you can install it via npm
 
 ```bash
 npm install @axetroy/dvm -g

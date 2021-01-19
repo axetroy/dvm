@@ -1,29 +1,30 @@
 {
-  "name": "@axetroy/dvm",
-  "version": "0.0.0",
-  "description": "Fast and simple version manger for Deno without runtime dependencies",
+  "author": "Axetroy",
   "bin": {
     "dvm": "./bin/dvm"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/axetroy/dvm.git"
+  "dependencies": {
+    "download": "8.0.0",
+    "progress": "2.0.3"
   },
+  "description": "Fast and simple version manger for Deno without runtime dependencies",
   "files": [
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
     "bin/dvm",
-    "scripts/postinstall.js"
+    "scripts/postinstall.js",
+    "download/.gitkeep"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node scripts/postinstall.js"
-  },
-  "author": "Axetroy",
   "license": "MIT",
-  "dependencies": {
-    "download": "8.0.0",
-    "progress": "2.0.3"
-  }
+  "name": "@axetroy/dvm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axetroy/dvm.git"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.0"
 }

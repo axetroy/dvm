@@ -1,3 +1,30 @@
 #!/usr/bin/env node
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
+const { spawn } = require("child_process");
 
-throw new Error("dvm command line did not install correctly. reinstall without '--ignore-scripts' flag");
+const suffix = os.platform() === "win32" ? ".exe" : "";
+
+const bin = path.join(__dirname, "..", "download", "dvm" + suffix);
+
+const argv = process.argv;
+
+if (!fs.existsSync(bin)) {
+  console.error(
+    `dvm have been download. please run the following command 'node node_modules/@axetroy/dvm/scripts/postinstall.js'`
+  );
+  os.exit(1);
+}
+
+const ps = spawn(bin, argv.slice(2), {
+  stdio: "inherit",
+});
+
+ps.on("error", (code) => {
+  process.exit(code);
+});
+
+ps.on("exit", (code) => {
+  process.exit(code);
+});
