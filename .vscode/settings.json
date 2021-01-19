@@ -5,7 +5,7 @@
     "promptForTags": false,
     "transform": "snakecase"
   },
-  "go.buildFlags": ["-mode=vendor"],
+  "go.buildFlags": ["-mod=vendor"],
   "go.toolsEnvVars": {
     "GOFLAGS": "-mod=vendor"
   }
