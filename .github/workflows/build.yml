@@ -24,8 +24,6 @@ jobs:
           go env
 
       - name: Install tools
-        env:
-          GO111MODULE: on
         run: |
           go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.37.0
           golangci-lint --version
