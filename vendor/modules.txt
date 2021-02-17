@@ -1,17 +1,22 @@
 # github.com/AlecAivazis/survey/v2 v2.2.7
+## explicit
 github.com/AlecAivazis/survey/v2
 github.com/AlecAivazis/survey/v2/core
 github.com/AlecAivazis/survey/v2/terminal
 # github.com/Masterminds/semver/v3 v3.1.1
+## explicit
 github.com/Masterminds/semver/v3
 # github.com/VividCortex/ewma v1.1.1
 github.com/VividCortex/ewma
 # github.com/cheggaaa/pb/v3 v3.0.6
+## explicit
 github.com/cheggaaa/pb/v3
 github.com/cheggaaa/pb/v3/termutil
 # github.com/cpuguy83/go-md2man/v2 v2.0.0
+## explicit
 github.com/cpuguy83/go-md2man/v2/md2man
 # github.com/fatih/color v1.10.0
+## explicit
 github.com/fatih/color
 # github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 github.com/kballard/go-shellquote
@@ -24,14 +29,19 @@ github.com/mattn/go-runewidth
 # github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b
 github.com/mgutz/ansi
 # github.com/pkg/errors v0.9.1
+## explicit
 github.com/pkg/errors
 # github.com/russross/blackfriday/v2 v2.0.1
 github.com/russross/blackfriday/v2
 # github.com/shurcooL/sanitized_anchor_name v1.0.0
 github.com/shurcooL/sanitized_anchor_name
+# github.com/stretchr/testify v1.4.0
+## explicit
 # github.com/urfave/cli/v2 v2.3.0
+## explicit
 github.com/urfave/cli/v2
 # golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c
+## explicit
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae
 golang.org/x/sys/unix
