@@ -11,8 +11,9 @@ builds:
       - amd64
       - arm
       - arm64
-      - mipsle
+      - mips
       - mips64
+      - mipsle
       - mips64le
     goarm:
       - 5

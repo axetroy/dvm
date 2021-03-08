@@ -20,6 +20,14 @@ function getArch() {
       if (!armv) return "armv7";
 
       return `armv${armv}`;
+    case "mips":
+      return "mips_hardfloat";
+    case "mips64":
+      return "mips64_hardfloat";
+    case "mipsel":
+      return "mipsle_hardfloat";
+    case "mips64el":
+      return "mips64le_hardfloat";
     default:
       return arch;
   }
