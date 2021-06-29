@@ -1,4 +1,4 @@
-# github.com/AlecAivazis/survey/v2 v2.2.12
+# github.com/AlecAivazis/survey/v2 v2.2.13
 ## explicit
 github.com/AlecAivazis/survey/v2
 github.com/AlecAivazis/survey/v2/core
@@ -44,11 +44,13 @@ github.com/shurcooL/sanitized_anchor_name
 github.com/urfave/cli/v2
 # golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c
 ## explicit
-golang.org/x/crypto/ssh/terminal
 # golang.org/x/sys v0.0.0-20210403161142-5e06dd20ab57
 golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/term v0.0.0-20210503060354-a79de5458b56
+golang.org/x/term
 # golang.org/x/text v0.3.3
 golang.org/x/text/transform
 golang.org/x/text/width
