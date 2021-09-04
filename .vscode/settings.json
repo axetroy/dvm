@@ -8,5 +8,7 @@
   "go.buildFlags": ["-mod=vendor"],
   "go.toolsEnvVars": {
     "GOFLAGS": "-mod=vendor"
-  }
+  },
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": ["--fast"]
 }
