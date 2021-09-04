@@ -76,9 +76,9 @@ If you are using Linux/macOS. you can install it with the following command:
 # install latest version
 curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # or install specified version
-curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.9
+curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.10
 # or install from gobinaries.com
-curl -sf https://gobinaries.com/axetroy/dvm@v1.3.9 | sh
+curl -sf https://gobinaries.com/axetroy/dvm@v1.3.10 | sh
 ```
 
 Or
