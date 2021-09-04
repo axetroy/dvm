@@ -128,7 +128,7 @@ $ dvm destroy
 
 ### Build from source code
 
-Make sure you have `Golang@v1.15.x` installed.
+Make sure you have `Golang@v1.17.x` installed.
 
 ```shell
 $ git clone https://github.com/axetroy/dvm.git $GOPATH/src/github.com/axetroy/dvm

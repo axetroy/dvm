@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        go: ["^1.16.0"]
+        go: ["^1.17.0"]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     name: Go ${{ matrix.go }} in ${{ matrix.os }}
     steps:
@@ -68,7 +68,7 @@ jobs:
 
       - uses: actions/setup-go@v2
         with:
-          go-version: "^1.16.0"
+          go-version: "^1.17.0"
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2

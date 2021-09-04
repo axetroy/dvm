@@ -122,7 +122,7 @@ $ dvm destroy
 
 ### 从源码构建
 
-请确保你已安装 `Golang@v1.15.x`.
+请确保你已安装 `Golang@v1.17.x`.
 
 ```bash
 > go get -v -u github.com/axetroy/dvm
