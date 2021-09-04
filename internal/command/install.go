@@ -26,7 +26,7 @@ func Install(version string) error {
 
 	cacheFilepath := filepath.Join(core.CacheDir, filename)
 
-	quitAndCleanCache := make(chan os.Signal)
+	quitAndCleanCache := make(chan os.Signal, 1)
 	signal.Notify(quitAndCleanCache, util.GetAbortSignals()...)
 
 	go func() {
@@ -59,7 +59,7 @@ func Install(version string) error {
 		return errors.Wrap(err, "ensure workspace fail")
 	}
 
-	quitAndCleanWorkspace := make(chan os.Signal)
+	quitAndCleanWorkspace := make(chan os.Signal, 1)
 	signal.Notify(quitAndCleanWorkspace, util.GetAbortSignals()...)
 
 	go func() {

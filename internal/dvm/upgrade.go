@@ -69,7 +69,7 @@ func Upgrade(version string, force bool) error {
 		_ = os.RemoveAll(core.CacheDir)
 	}()
 
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, util.GetAbortSignals()...)
 
 	go func() {
