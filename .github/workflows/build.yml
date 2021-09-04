@@ -61,7 +61,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist --skip-publish
+          args: release --rm-dist --skip-publish --skip-validate
 
   release:
     name: Release to Github
@@ -90,7 +90,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist --release-notes=./release.md
+          args: release --rm-dist --release-notes=./release.md --skip-validate
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
