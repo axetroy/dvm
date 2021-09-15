@@ -1,5 +1,0 @@
-node_modules
-*.lock
-package-lock.json
-dist
-scripts/bump.js
