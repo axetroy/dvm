@@ -122,10 +122,12 @@ SOURCE CODE:
 			Usage:     "Use specified Deno version",
 			ArgsUsage: "<version>",
 			Action: func(c *cli.Context) error {
-				if c.Args().Len() == 0 {
-					return errors.New(fmt.Sprintf("require argument <%s>", "version"))
+				var version string
+
+				if c.Args().Len() != 0 {
+					version = c.Args().First()
 				}
-				return command.Use(c.Args().First())
+				return command.Use(version)
 			},
 		},
 		{

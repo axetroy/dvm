@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/fs"
@@ -15,6 +16,16 @@ import (
 
 // use Deno
 func Use(version string) error {
+	if version == "" {
+		data, _ := ioutil.ReadFile(".dvmrc")
+
+		if data == nil {
+			return errors.New(fmt.Sprintf("No .dvmrc file found \n\nrequire argument <%s>", "version"))
+		} else {
+			version = setCharV(strings.TrimSpace(string(data)))
+		}
+	}
+
 	files, err := ioutil.ReadDir(core.ReleaseDir)
 
 	if err != nil {
@@ -60,4 +71,12 @@ func Use(version string) error {
 	fmt.Printf("Currently using Deno %s\n", version)
 
 	return nil
+}
+
+func setCharV(version string) string {
+	if string(version[0]) != "v" {
+		return "v" + string(version)
+	}
+
+	return string(version)
 }
