@@ -3,108 +3,126 @@ name: ci
 on: [push, pull_request]
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        go: ["^1.17.0"]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
-    name: Go ${{ matrix.go }} in ${{ matrix.os }}
+  linux:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-go@v2
+      - name: Checkout V
+        uses: actions/checkout@v2
         with:
-          go-version: ${{ matrix.go }}
+          repository: vlang/v
 
-      - name: Environment
+      - name: Build V
         run: |
-          go version
-          go env
+          make
+          sudo ./v symlink
 
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
+      - name: Checkout source code
+        uses: actions/checkout@v2
         with:
-          # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
-          version: v1.42
+          path: dvm
 
-          # Optional: golangci-lint command line arguments.
-          # args: --issues-exit-code=0
-
-          # Optional: show only new issues if it's a pull request. The default value is `false`.
-          # only-new-issues: true
-
-          # Optional: if set to true then the action will use pre-installed Go.
-          skip-go-installation: true
-
-          # Optional: if set to true then the action don't cache or restore ~/go/pkg.
-          # skip-pkg-cache: true
-
-          # Optional: if set to true then the action don't cache or restore ~/.cache/go-build.
-          # skip-build-cache: true
-
-      - name: Lint
-        run: make lint
-
-      - name: Format
+      - name: Build dvm
         run: |
-          make format-check
+          cd ./dvm
+          make linux
 
-      - name: Test
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linux
+          path: |
+            ./dvm/bin/dvm_linux_amd64
+          if-no-files-found: error
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout V
+        uses: actions/checkout@v2
+        with:
+          repository: vlang/v
+
+      - name: Build V
         run: |
-          make test
-          go mod tidy
-          git checkout ./
+          .\make.bat -msvc
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          path: dvm
+
+      - name: Build dvm
+        run: |
+          $env:path += ";$(get-location)"
+          cd ./dvm
+          make windows
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: windows
+          path: |
+            .\\dvm\\bin\\dvm_windows_amd64.exe
+          if-no-files-found: error
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout V
+        uses: actions/checkout@v2
+        with:
+          repository: vlang/v
+
+      - name: Build V
+        run: |
+          make
+          sudo ./v symlink
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          path: dvm
 
       - name: Build
-        uses: goreleaser/goreleaser-action@v2
+        run: |
+          cd ./dvm
+          make macos
+
+      - uses: actions/upload-artifact@v2
         with:
-          version: latest
-          args: release --rm-dist --skip-publish --skip-validate
+          name: macos
+          path: ./dvm/bin/dvm_darwin_amd64
+          if-no-files-found: error
 
   release:
     name: Release to Github
     if: startsWith(github.ref, 'refs/tags/') && github.repository == 'axetroy/dvm'
-    needs: [ci]
+    needs: [linux, windows, macos]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
         with:
-          fetch-depth: 0
+          name: linux
 
-      - uses: axetroy/setup-whatchanged@v1
+      - uses: actions/download-artifact@v2
         with:
-            version: v0.3.4
+          name: windows
 
-      - name: Generate changelog
+      - uses: actions/download-artifact@v2
+        with:
+          name: macos
+
+      - name: tar
         run: |
-          whatchanged --tpl=release.tpl --output=release.md
-          cat release.md
+          mv dvm_linux_amd64 dvm && chmod +x dvm && tar czf dvm_linux_amd64.tar.gz dvm && rm dvm
+          mv dvm_darwin_amd64 dvm && chmod +x dvm && tar czf dvm_darwin_amd64.tar.gz dvm && rm dvm
+          mv dvm_windows_amd64.exe dvm.exe && chmod +x dvm.exe && tar czf dvm_windows_amd64.tar.gz dvm.exe && rm dvm.exe
+          ls -lh
 
-      - uses: actions/setup-go@v2
-        with:
-          go-version: "^1.17.0"
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
-        with:
-          version: latest
-          args: release --rm-dist --release-notes=./release.md --skip-validate
+      - uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - name: Prepare publish
-        env:
-          GITHUB_REF: ${{ github.ref }}
-        run: |
-          cp README.md ./npm/README.md
-          cp release.md ./npm/CHANGELOG.md
-          cp LICENSE ./npm/LICENSE
-          node ./npm/scripts/bump.js
-
-      - name: Publish to NPM
-        uses: JS-DevTools/npm-publish@v1
         with:
-          package: ./npm/package.json
-          token: ${{ secrets.NPM_TOKEN }}
+          files: |
+            dvm_linux_amd64.tar.gz
+            dvm_darwin_amd64.tar.gz
+            dvm_windows_amd64.tar.gz
+          draft: false

@@ -39,16 +39,12 @@ pub fn command_install(version string) ? {
 
 	println(target)
 
-	eprintln("Downloading...")
+	eprintln('Downloading...')
 
 	// http.download_file_with_progress(download_url, target, on_download, on_finish)
-	http.download_file(download_url, target) or {
-		return err
-	}
+	http.download_file(download_url, target) or { return err }
 
-	eprintln("Download done!")
+	eprintln('Download done!')
 
-	szip.extract_zip_to_dir(target, './dist') or {
-		return err
-	}
+	szip.extract_zip_to_dir(target, './dist') or { return err }
 }

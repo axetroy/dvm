@@ -11,7 +11,7 @@ pub:
 	url     string
 }
 
-pub fn command_ls() ? {
+pub fn command_ls_remote() ? {
 	resp := http.get('https://api.github.com/repos/denoland/deno/git/refs/tags') or { return err }
 
 	tags := json.decode([]Tag, resp.text) or { return err }
