@@ -23,6 +23,7 @@ jobs:
 
       - name: Build dvm
         run: |
+          ls -lh
           make linux
 
       - uses: actions/upload-artifact@v2
