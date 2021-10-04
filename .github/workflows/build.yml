@@ -89,7 +89,7 @@ jobs:
 
       - name: Build
         run: |
-          homebrew install openssl
+          brew install openssl
           cd ./dvm
           make macos
 
