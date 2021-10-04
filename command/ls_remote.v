@@ -12,9 +12,9 @@ pub:
 }
 
 pub fn command_ls_remote() ? {
-	resp := http.get('https://api.github.com/repos/denoland/deno/git/refs/tags') or { return err }
+	resp := http.get('https://api.github.com/repos/denoland/deno/git/refs/tags') ?
 
-	tags := json.decode([]Tag, resp.text) or { return err }
+	tags := json.decode([]Tag, resp.text) ?
 
 	query := r'^v\d+\.\d+\.\d+(-.*)?$'
 

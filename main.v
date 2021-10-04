@@ -2,7 +2,7 @@ module main
 
 import os
 import flag
-import command { command_current, command_install, command_ls, command_ls_remote, command_uninstall, command_use }
+import command { command_current, command_install, command_ls, command_ls_remote, command_uninstall, command_unused, command_use }
 
 fn main() {
 	version := '2.0.0'
@@ -57,6 +57,13 @@ fn main() {
 				exit(1)
 			}
 			command_use(additional_args[1]) or { panic(err) }
+		}
+		'unused' {
+			if additional_args.len > 1 {
+				println(fp.usage())
+				exit(1)
+			}
+			command_unused() or { panic(err) }
 		}
 		'uninstall' {
 			if additional_args.len < 2 {
