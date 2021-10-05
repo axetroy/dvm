@@ -89,13 +89,13 @@ $v="v1.3.10"; iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | 
 download the executable file and put the executable file to `$PATH` then try the following command:
 
 ```bash
-$ whatchanged --help
+$ dvm --help
 ```
 
 4. Build and install from source using [Golang](https://golang.org) (All platforms)
 
 ```bash
-go install github.com/axetroy/dvm/cmd/whatchanged@v1.3.10
+go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
 ```
 
 ### Upgrade
