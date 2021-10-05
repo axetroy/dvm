@@ -58,12 +58,6 @@ $ dvm --help
 
 ### 安装
 
-如果你已安装了 nodejs, 你可以通过 npm 进行安装
-
-```bash
-npm install @axetroy/dvm -g
-```
-
 如果你使用的是 Linux/macOS 系统，你可以运行以下命令安装
 
 ```shell
