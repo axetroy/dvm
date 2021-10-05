@@ -16,7 +16,7 @@ if ($args.Length -eq 1) {
   $Version = $args.Get(0)
 }
 
-if (Test-Path C:\Windows\SysNative) {
+if ([Environment]::Is64BitProcess) {
   $arch = "amd64"
 } else {
   $arch = "386"
