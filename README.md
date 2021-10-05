@@ -62,43 +62,40 @@ $ dvm uninstall v0.25.0
 $ dvm --help
 ```
 
-### Installation
+### Install
 
-If you are using Linux/macOS. you can install it with the following command:
+1. Shell (Mac/Linux)
 
-```shell
+```bash
 # install latest version
-curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
 # or install specified version
-curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.10
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.10
 # or install from gobinaries.com
 curl -sf https://gobinaries.com/axetroy/dvm@v1.3.10 | sh
 ```
 
-Or
-
-Download the executable file for your platform at [release page](https://github.com/axetroy/dvm/releases)
-
-Then set the environment variable.
-
-eg, the executable file is in the `~/bin` directory.
+2. PowerShell (Windows):
 
 ```bash
-# ~/.bash_profile
-export PATH="$PATH:$HOME/bin"
+# install latest version
+iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | iex
+# or install specified version
+$v="v1.3.10"; iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | iex
 ```
 
-then, try it out.
+3. [Github release page](https://github.com/axetroy/dvm/releases) (All platforms)
+
+download the executable file and put the executable file to `$PATH` then try the following command:
 
 ```bash
-dvm --help
+$ whatchanged --help
 ```
 
-Finally, to use Deno correctly, you also need to set environment variables
+4. Build and install from source using [Golang](https://golang.org) (All platforms)
 
 ```bash
-# ~/.bash_profile
-export PATH="$PATH:$HOME/.deno/bin"
+go install github.com/axetroy/dvm/cmd/whatchanged@v1.3.10
 ```
 
 ### Upgrade
@@ -118,22 +115,6 @@ run the following command to uninstall `dvm` or remove `dvm` executable file and
 
 ```shell
 $ dvm destroy
-```
-
-### Build from source code
-
-Make sure you have `Golang@v1.17.x` installed.
-
-```shell
-$ git clone https://github.com/axetroy/dvm.git $GOPATH/src/github.com/axetroy/dvm
-$ cd $GOPATH/src/github.com/axetroy/dvm
-$ make build
-```
-
-### Test
-
-```bash
-$ make test
 ```
 
 ### Related

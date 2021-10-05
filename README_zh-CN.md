@@ -58,41 +58,38 @@ $ dvm --help
 
 ### 安装
 
-如果你使用的是 Linux/macOS 系统，你可以运行以下命令安装
+1. Shell (Mac/Linux)
 
-```shell
-# 安装最新版
-curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
-# 安装指定版本
-curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.10
-# 从 gobinaries.com 中安装
+```bash
+# 安装最新版本
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
+# 或者安装指定版本
+curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.10
+# 或者通过 gobinaries.com 安装
 curl -sf https://gobinaries.com/axetroy/dvm@v1.3.10 | sh
 ```
 
-或者
-
-在 [release page](https://github.com/axetroy/dvm/releases) 页面下载你平台相关的可执行文件
-
-然后设置环境变量
-
-例如, 可执行文件放在 `~/bin` 目录
+2. PowerShell (Windows):
 
 ```bash
-# ~/.bash_profile
-export PATH="$PATH:$HOME/bin"
+# 安装最新版本
+iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | iex
+# 或者安装指定版本
+$v="v1.3.10"; iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | iex
 ```
 
-然后，试一下是否设置正确
+3. [Github release page](https://github.com/axetroy/dvm/releases) (全平台支持))
+
+下载可执行文件，并且把它加入到`$PATH` 环境变量中，然后尝试以下命令：
 
 ```bash
-dvm --help
+$ whatchanged --help
 ```
 
-最后，为了正确使用 Deno，你还需要设置环境变量
+4. 使用 [Golang](https://golang.org) 从源码中构建并安装 (全平台支持)
 
 ```bash
-# ~/.bash_profile
-export PATH="$PATH:$HOME/.deno/bin"
+go install github.com/axetroy/dvm/cmd/whatchanged@v1.3.10
 ```
 
 ### 升级
