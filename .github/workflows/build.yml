@@ -79,7 +79,7 @@ jobs:
 
       - name: Generate changelog
         run: |
-          whatchanged --tpl=release.tpl --output=release.md
+          whatchanged --output=release.md
           cat release.md
 
       - uses: actions/setup-go@v2
