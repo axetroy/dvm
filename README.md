@@ -67,32 +67,20 @@ $ dvm --help
 1. Shell (Mac/Linux)
 
 ```bash
-# install latest version
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash
-# or install specified version
-curl -fsSL https://raw.githubusercontent.com/axetroy/dvm/master/install.sh | bash -s v1.3.10
-# or install from gobinaries.com
-curl -sf https://gobinaries.com/axetroy/dvm@v1.3.10 | sh
+curl -fsSL https://github.com/release-lab/install/raw/v1/install.sh | bash -s -- -r=axetroy/dvm
 ```
 
 2. PowerShell (Windows):
 
 ```bash
-# install latest version
-iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | iex
-# or install specified version
-$v="v1.3.10"; iwr https://github.com/axetroy/dvm/raw/master/install.ps1 -useb | iex
+$r="axetroy/dvm";iwr https://github.com/release-lab/install/raw/v1/install.ps1 -useb | iex
 ```
 
 3. [Github release page](https://github.com/axetroy/dvm/releases) (All platforms)
 
-download the executable file and put the executable file to `$PATH` then try the following command:
+> download the executable file and put the executable file to `$PATH`
 
-```bash
-$ dvm --help
-```
-
-4. Build and install from source using [Golang](https://golang.org) (All platforms)
+1. Build and install from source using [Golang](https://golang.org) (All platforms)
 
 ```bash
 go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
