@@ -80,7 +80,7 @@ $r="axetroy/dvm";iwr https://github.com/release-lab/install/raw/v1/install.ps1 -
 
 > download the executable file and put the executable file to `$PATH`
 
-1. Build and install from source using [Golang](https://golang.org) (All platforms)
+4. Build and install from source using [Golang](https://golang.org) (All platforms)
 
 ```bash
 go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
