@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/axetroy/dvm/internal/core"
+	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/pkg/errors"
 )
 
@@ -27,14 +27,14 @@ func Destroy() error {
 	}
 
 	//remove $HOME/.dvm
-	if err := os.RemoveAll(core.RootDir); err != nil {
+	if err := os.RemoveAll(dvm.RootDir); err != nil {
 		return errors.Wrap(err, "remove `$HOME/.dvm` fail")
 	}
 
 	// remove $HOME/.deno/bin/deno
-	currentUseDenoFilepath := filepath.Join(core.DenoBinDir, core.ExecutableFilename)
+	currentUseDenoFilepath := filepath.Join(dvm.DenoBinDir, dvm.ExecutableFilename)
 	if err := os.RemoveAll(currentUseDenoFilepath); err != nil {
-		return errors.Wrapf(err, "remove `$HOME/.deno/bin/%s` fail", core.ExecutableFilename)
+		return errors.Wrapf(err, "remove `$HOME/.deno/bin/%s` fail", dvm.ExecutableFilename)
 	}
 
 	dvmFilepath, err := os.Executable()

@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/axetroy/dvm/internal/command"
-	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
@@ -179,9 +178,9 @@ SOURCE CODE:
 			fmt.Println(err.Error())
 			fmt.Printf("run with environment variables %s to print more information\n", color.GreenString("DEBUG=1"))
 		}
-		_ = os.RemoveAll(core.CacheDir)
+		_ = os.RemoveAll(dvm.CacheDir)
 		os.Exit(1)
 	} else {
-		_ = os.RemoveAll(core.CacheDir)
+		_ = os.RemoveAll(dvm.CacheDir)
 	}
 }

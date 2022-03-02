@@ -7,24 +7,24 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/axetroy/dvm/internal/core"
+	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
 )
 
 // execute with specified Deno version
 func Exec(version string, args []string) error {
-	files, err := ioutil.ReadDir(core.ReleaseDir)
+	files, err := ioutil.ReadDir(dvm.ReleaseDir)
 
 	if err != nil {
-		return errors.Wrapf(err, "read dir `%s` fail", core.ReleaseDir)
+		return errors.Wrapf(err, "read dir `%s` fail", dvm.ReleaseDir)
 	}
 
 	var denoPath = ""
 
 	for _, f := range files {
 		if f.Name() == version {
-			denoPath = filepath.Join(core.ReleaseDir, version, core.ExecutableFilename)
+			denoPath = filepath.Join(dvm.ReleaseDir, version, dvm.ExecutableFilename)
 		}
 	}
 

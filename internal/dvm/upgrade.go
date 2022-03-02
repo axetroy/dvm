@@ -11,9 +11,9 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/util"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
@@ -24,7 +24,7 @@ func Upgrade(version string, force bool) error {
 	var (
 		err         error
 		tarFilename = fmt.Sprintf("dvm_%s_%s.tar.gz", runtime.GOOS, runtime.GOARCH)
-		tarFilepath = filepath.Join(core.CacheDir, tarFilename)
+		tarFilepath = filepath.Join(CacheDir, tarFilename)
 	)
 
 	if version == "" {
@@ -66,7 +66,7 @@ func Upgrade(version string, force bool) error {
 	fmt.Printf("Upgrade dvm `%s` to `%s`\n", currentDvmVersion, version)
 
 	defer func() {
-		_ = os.RemoveAll(core.CacheDir)
+		_ = os.RemoveAll(CacheDir)
 	}()
 
 	quit := make(chan os.Signal, 1)
@@ -76,7 +76,7 @@ func Upgrade(version string, force bool) error {
 		<-quit
 		fmt.Printf("What made you cancel the download? you can download the file via `%s` and update manually.\n", downloadURL)
 		fmt.Println("Good Luck :)")
-		_ = os.RemoveAll(core.CacheDir)
+		_ = os.RemoveAll(CacheDir)
 		os.Exit(255)
 	}()
 
@@ -89,18 +89,18 @@ func Upgrade(version string, force bool) error {
 	defer signal.Stop(quit)
 
 	// decompress the tag
-	if err := decompress(tarFilepath, core.CacheDir); err != nil {
+	if err := decompress(tarFilepath, CacheDir); err != nil {
 		return errors.WithStack(err)
 	}
 
-	downloadedDvmFilepath := filepath.Join(core.CacheDir, "dvm")
+	downloadedDvmFilepath := filepath.Join(CacheDir, "dvm")
 
 	if runtime.GOOS == "windows" && !strings.HasSuffix(downloadedDvmFilepath, ".exe") {
 		// Ensure to add '.exe' to given path on Windows
 		downloadedDvmFilepath += ".exe"
 	}
 
-	if err := util.ReplaceExecutableFile(downloadedDvmFilepath, dvmExecutablePath); err != nil {
+	if err := replaceExecutableFile(downloadedDvmFilepath, dvmExecutablePath); err != nil {
 		return errors.WithStack(err)
 	}
 
@@ -177,4 +177,51 @@ func decompress(tarFile, dest string) error {
 	}
 
 	return nil
+}
+
+// replace executable file
+// In Windows, if this executable file is running, it cannot be replaced
+func replaceExecutableFile(newFilepath, oldFilepath string) (err error) {
+	var (
+		old os.FileInfo
+	)
+
+	old, err = os.Stat(oldFilepath)
+
+	if err != nil {
+		return err
+	}
+
+	// cover the binary file
+	if runtime.GOOS == "windows" {
+		oldFilepathBackup := filepath.Join(CacheDir, old.Name()) + fmt.Sprintf(".%d.old", time.Now().UnixNano())
+		if err = os.Rename(oldFilepath, oldFilepathBackup); err != nil {
+			return errors.Wrapf(err, "backup old version fail")
+		}
+
+		defer func() {
+			// if upgrade fail
+			if err != nil {
+				// try rollback
+				if err = os.Rename(oldFilepathBackup, oldFilepath); err != nil {
+					err = errors.Wrap(err, "rollback fail")
+					return
+				}
+			} else {
+				_ = os.Remove(oldFilepathBackup)
+				return
+			}
+		}()
+
+		// rename downloaded dvm to exist dvm filepath
+		if err = os.Rename(newFilepath, oldFilepath); err != nil {
+			return errors.Wrapf(err, "rename downloaded file to dvm filepath fail")
+		}
+	} else {
+		if err = os.Rename(newFilepath, oldFilepath); err != nil {
+			err = errors.Wrapf(err, "rename `%s` to `%s` fail", newFilepath, oldFilepath)
+		}
+	}
+
+	return
 }

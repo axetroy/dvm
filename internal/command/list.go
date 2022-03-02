@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/deno"
+	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
 )
 
 // list of installed Deno versions
 func List() error {
-	files, err := ioutil.ReadDir(core.ReleaseDir)
+	files, err := ioutil.ReadDir(dvm.ReleaseDir)
 
 	if err != nil {
-		return errors.Wrapf(err, "read dir `%s` fail", core.ReleaseDir)
+		return errors.Wrapf(err, "read dir `%s` fail", dvm.ReleaseDir)
 	}
 
 	if len(files) == 0 {

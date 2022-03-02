@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/axetroy/dvm/internal/core"
+	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/axetroy/dvm/internal/fs"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
@@ -15,10 +15,10 @@ import (
 
 // use Deno
 func Use(version string) error {
-	files, err := ioutil.ReadDir(core.ReleaseDir)
+	files, err := ioutil.ReadDir(dvm.ReleaseDir)
 
 	if err != nil {
-		return errors.Wrapf(err, "read dir `%s` fail", core.ReleaseDir)
+		return errors.Wrapf(err, "read dir `%s` fail", dvm.ReleaseDir)
 	}
 
 	var match bool
@@ -28,7 +28,7 @@ func Use(version string) error {
 
 		if v == version {
 			match = true
-			oldDenoFilepath := filepath.Join(core.DenoBinDir, core.ExecutableFilename)
+			oldDenoFilepath := filepath.Join(dvm.DenoBinDir, dvm.ExecutableFilename)
 
 			// remove it before anyway
 			if err := os.Remove(oldDenoFilepath); err != nil {
@@ -37,7 +37,7 @@ func Use(version string) error {
 				}
 			}
 
-			p := filepath.Join(core.ReleaseDir, v, core.ExecutableFilename)
+			p := filepath.Join(dvm.ReleaseDir, v, dvm.ExecutableFilename)
 
 			if err := os.Symlink(p, oldDenoFilepath); err != nil {
 				// Windows requires permission for soft link

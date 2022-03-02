@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"path/filepath"
 
-	"github.com/axetroy/dvm/internal/core"
 	"github.com/axetroy/dvm/internal/deno"
+	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/axetroy/dvm/internal/fs"
 	"github.com/axetroy/dvm/internal/util"
 	"github.com/pkg/errors"
@@ -24,7 +24,7 @@ func Install(version string) error {
 
 	version = v
 
-	cacheFilepath := filepath.Join(core.CacheDir, filename)
+	cacheFilepath := filepath.Join(dvm.CacheDir, filename)
 
 	quitAndCleanCache := make(chan os.Signal, 1)
 	signal.Notify(quitAndCleanCache, util.GetAbortSignals()...)
@@ -32,7 +32,7 @@ func Install(version string) error {
 	go func() {
 		<-quitAndCleanCache
 		// make sure dir been remove if it exit
-		_ = os.RemoveAll(core.CacheDir)
+		_ = os.RemoveAll(dvm.CacheDir)
 		os.Exit(255)
 	}()
 
@@ -53,7 +53,7 @@ func Install(version string) error {
 		return errors.Wrap(err, "unzip tar file fail")
 	}
 
-	currentVersionWorkspaceDir := filepath.Join(core.ReleaseDir, version)
+	currentVersionWorkspaceDir := filepath.Join(dvm.ReleaseDir, version)
 
 	if err := fs.EnsureDir(currentVersionWorkspaceDir); err != nil {
 		return errors.Wrap(err, "ensure workspace fail")
