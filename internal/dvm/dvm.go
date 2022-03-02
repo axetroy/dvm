@@ -76,7 +76,7 @@ func CheckEnv() error {
 	paths := strings.Split(os.Getenv("PATH"), ":")
 
 	for _, p := range paths {
-		if strings.ToLower(p) == strings.ToLower(DenoBinDir) {
+		if strings.EqualFold(strings.ToLower(p), strings.ToLower(DenoBinDir)) {
 			return nil
 		}
 	}
