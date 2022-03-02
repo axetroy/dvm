@@ -16,6 +16,10 @@ import (
 
 // install Deno
 func Install(version string) error {
+	if err := dvm.CheckEnv(); err != nil {
+		return errors.WithStack(err)
+	}
+
 	v, filename, downloadURL, err := deno.GetRemoteDownloadURL(version)
 
 	if err != nil {

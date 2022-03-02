@@ -15,6 +15,10 @@ import (
 
 // use Deno
 func Use(version string) error {
+	if err := dvm.CheckEnv(); err != nil {
+		return errors.WithStack(err)
+	}
+
 	files, err := ioutil.ReadDir(dvm.ReleaseDir)
 
 	if err != nil {
