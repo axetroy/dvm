@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Masterminds/semver/v3"
+	semver "github.com/Masterminds/semver/v3"
 	"github.com/axetroy/dvm/internal/util"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"

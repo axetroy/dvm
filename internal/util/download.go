@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/axetroy/dvm/internal/fs"
-	"github.com/cheggaaa/pb/v3"
+	pb "github.com/cheggaaa/pb/v3"
 	"github.com/pkg/errors"
 )
 

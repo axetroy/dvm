@@ -8,7 +8,7 @@ import (
 	"github.com/axetroy/dvm/internal/dvm"
 	"github.com/fatih/color"
 	"github.com/pkg/errors"
-	"github.com/urfave/cli/v2"
+	cli "github.com/urfave/cli/v2"
 )
 
 var (

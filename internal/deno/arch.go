@@ -3,7 +3,7 @@ package deno
 import (
 	"runtime"
 
-	"github.com/Masterminds/semver/v3"
+	semver "github.com/Masterminds/semver/v3"
 	"github.com/pkg/errors"
 )
 
