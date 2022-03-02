@@ -77,7 +77,7 @@ $ dvm --help
 4. 使用 [Golang](https://golang.org) 从源码中构建并安装 (全平台支持)
 
    ```bash
-   go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
+   go install github.com/axetroy/dvm/cmd/dvm@v1.3.11
    ```
 
 ### 升级

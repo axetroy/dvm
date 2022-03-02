@@ -83,7 +83,7 @@ $ dvm --help
 4. Build and install from source using [Golang](https://golang.org) (All platforms)
 
    ```bash
-   go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
+   go install github.com/axetroy/dvm/cmd/dvm@v1.3.11
    ```
 
 ### Upgrade
