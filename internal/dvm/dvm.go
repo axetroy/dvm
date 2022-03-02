@@ -83,7 +83,7 @@ func CheckEnv() error {
 
 	envStr := strings.ReplaceAll(DenoBinDir, HomeDir, "$HOME")
 
-	msg := fmt.Sprintf(`For using dvm, you need to put '%s' into $PATH environment.`, envStr)
+	msg := fmt.Sprintf(`For using dvm, you need to put '%s' into $PATH environment and restart terminal.`, envStr)
 
 	fmt.Fprintf(os.Stderr, "can not found '%s' in '$PATH'\n", envStr)
 
