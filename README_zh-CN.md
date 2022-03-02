@@ -80,8 +80,6 @@ $ dvm --help
    go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
    ```
 
-**然后将 `$HOME/.deno/bin` 放入 `$PATH` 环境变量中。**
-
 ### 升级
 
 你可以重新下载可执行文件然后覆盖

@@ -86,8 +86,6 @@ $ dvm --help
    go install github.com/axetroy/dvm/cmd/dvm@v1.3.10
    ```
 
-**then put `$HOME/.deno/bin` into `$PATH` environment variable.**
-
 ### Upgrade
 
 You can re-download the executable and overwrite the original file.
