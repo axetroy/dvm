@@ -64,23 +64,29 @@ $ dvm --help
 
 ### Install
 
-1. Shell (Mac/Linux)
+1. [Cask](https://github.com/axetroy/cask.rs)
+
+   ```bash
+   cask install github.com/axetroy/dvm
+   ```
+
+2. Shell (Mac/Linux)
 
    ```bash
    curl -fsSL https://github.com/release-lab/install/raw/v1/install.sh | bash -s -- -r=axetroy/dvm
    ```
 
-2. PowerShell (Windows):
+3. PowerShell (Windows):
 
    ```bash
    $r="axetroy/dvm";iwr https://github.com/release-lab/install/raw/v1/install.ps1 -useb | iex
    ```
 
-3. [Github release page](https://github.com/axetroy/dvm/releases)
+4. [Github release page](https://github.com/axetroy/dvm/releases)
 
    > download the executable file and put the executable file to `$PATH`
 
-4. Build and install from source using [Golang](https://golang.org) (All platforms)
+5. Build and install from source using [Golang](https://golang.org) (All platforms)
 
    ```bash
    go install github.com/axetroy/dvm/cmd/dvm@v1.3.11
