@@ -64,7 +64,7 @@ $ dvm --help
 
 ### Install
 
-1. [Cask](https://github.com/axetroy/cask.rs)
+1. [Cask](https://github.com/axetroy/cask.rs)(Cross-Platform)
 
    ```bash
    cask install github.com/axetroy/dvm
