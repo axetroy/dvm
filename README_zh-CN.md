@@ -58,7 +58,7 @@ $ dvm --help
 
 ### 安装
 
-1. [Cask](https://github.com/axetroy/cask.rs)(跨平台)
+1. [Cask] (https://github.com/axetroy/cask.rs)(跨平台)
 
    ```bash
    cask install github.com/axetroy/dvm
