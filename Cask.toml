@@ -9,15 +9,15 @@ description = """
 """
 
 [darwin]
-x86_64 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_darwin_amd64.tar.gz" }
-aarch64 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_darwin_arm64.tar.gz" }
+x86_64 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_darwin_amd64.tar.gz"
+aarch64 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_darwin_arm64.tar.gz"
 
 [windows]
-x86 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_windows_386.tar.gz" }
-x86_64 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_windows_amd64.tar.gz" }
-aarch64 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_windows_arm64.tar.gz" }
+x86 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_windows_386.tar.gz"
+x86_64 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_windows_amd64.tar.gz"
+aarch64 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_windows_arm64.tar.gz"
 
 [linux]
-x86 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_linux_386.tar.gz" }
-x86_64 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_linux_amd64.tar.gz" }
-aarch64 = { url = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_linux_arm64.tar.gz" }
+x86 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_linux_386.tar.gz"
+x86_64 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_linux_amd64.tar.gz"
+aarch64 = "https://github.com/axetroy/dvm/releases/download/v{version}/dvm_linux_arm64.tar.gz"
