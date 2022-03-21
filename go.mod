@@ -3,13 +3,13 @@ module github.com/axetroy/dvm
 go 1.17
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.2
+	github.com/AlecAivazis/survey/v2 v2.3.3
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/cheggaaa/pb/v3 v3.0.8
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
 	github.com/fatih/color v1.13.0
 	github.com/pkg/errors v0.9.1
-	github.com/stretchr/testify v1.4.0 // indirect
+	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/urfave/cli/v2 v2.4.0
 )
 
