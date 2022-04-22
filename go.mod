@@ -9,7 +9,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
 	github.com/fatih/color v1.13.0
 	github.com/pkg/errors v0.9.1
-	github.com/urfave/cli/v2 v2.4.1
+	github.com/urfave/cli/v2 v2.4.2
 )
 
 require (
