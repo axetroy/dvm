@@ -43,9 +43,12 @@ github.com/rivo/uniseg
 # github.com/russross/blackfriday/v2 v2.1.0
 ## explicit
 github.com/russross/blackfriday/v2
-# github.com/urfave/cli/v2 v2.6.0
+# github.com/urfave/cli/v2 v2.10.1
 ## explicit; go 1.18
 github.com/urfave/cli/v2
+# github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673
+## explicit
+github.com/xrash/smetrics
 # golang.org/x/sys v0.0.0-20220422013727-9388b58f7150
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader
@@ -55,7 +58,7 @@ golang.org/x/sys/windows
 # golang.org/x/term v0.0.0-20210503060354-a79de5458b56
 ## explicit; go 1.17
 golang.org/x/term
-# golang.org/x/text v0.3.3
-## explicit; go 1.11
+# golang.org/x/text v0.3.7
+## explicit; go 1.17
 golang.org/x/text/transform
 golang.org/x/text/width
