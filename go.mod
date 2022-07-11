@@ -6,10 +6,10 @@ require (
 	github.com/AlecAivazis/survey/v2 v2.3.5
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/cheggaaa/pb/v3 v3.1.0
-	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/fatih/color v1.13.0
 	github.com/pkg/errors v0.9.1
-	github.com/urfave/cli/v2 v2.10.1
+	github.com/urfave/cli/v2 v2.11.0
 )
 
 require (
