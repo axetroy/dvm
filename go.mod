@@ -3,7 +3,7 @@ module github.com/axetroy/dvm
 go 1.18
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.5
+	github.com/AlecAivazis/survey/v2 v2.3.6
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/cheggaaa/pb/v3 v3.1.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
