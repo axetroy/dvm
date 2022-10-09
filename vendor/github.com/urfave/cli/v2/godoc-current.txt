@@ -32,7 +32,7 @@ var (
 	SuggestDidYouMeanTemplate string             = suggestDidYouMeanTemplate
 )
 var AppHelpTemplate = `NAME:
-   {{$v := offset .Name 6}}{{wrap .Name 3}}{{if .Usage}} - {{wrap .Usage $v}}{{end}}
+   {{template "helpNameTemplate" .}}
 
 USAGE:
    {{if .UsageText}}{{wrap .UsageText 3}}{{else}}{{.HelpName}} {{if .VisibleFlags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}{{if .Version}}{{if not .HideVersion}}
@@ -41,54 +41,39 @@ VERSION:
    {{.Version}}{{end}}{{end}}{{if .Description}}
 
 DESCRIPTION:
-   {{wrap .Description 3}}{{end}}{{if len .Authors}}
+   {{template "descriptionTemplate" .}}{{end}}
+{{- if len .Authors}}
 
-AUTHOR{{with $length := len .Authors}}{{if ne 1 $length}}S{{end}}{{end}}:
-   {{range $index, $author := .Authors}}{{if $index}}
-   {{end}}{{$author}}{{end}}{{end}}{{if .VisibleCommands}}
+AUTHOR{{template "authorsTemplate" .}}{{end}}{{if .VisibleCommands}}
 
-COMMANDS:{{range .VisibleCategories}}{{if .Name}}
-   {{.Name}}:{{range .VisibleCommands}}
-     {{join .Names ", "}}{{"\t"}}{{.Usage}}{{end}}{{else}}{{ $cv := offsetCommands .VisibleCommands 5}}{{range .VisibleCommands}}
-   {{$s := join .Names ", "}}{{$s}}{{ $sp := subtract $cv (offset $s 3) }}{{ indent $sp ""}}{{wrap .Usage $cv}}{{end}}{{end}}{{end}}{{end}}{{if .VisibleFlagCategories}}
+COMMANDS:{{template "visibleCommandCategoryTemplate" .}}{{end}}{{if .VisibleFlagCategories}}
 
-GLOBAL OPTIONS:{{range .VisibleFlagCategories}}
-   {{if .Name}}{{.Name}}
-   {{end}}{{range .Flags}}{{.}}
-   {{end}}{{end}}{{else}}{{if .VisibleFlags}}
+GLOBAL OPTIONS:{{template "visibleFlagCategoryTemplate" .}}{{else if .VisibleFlags}}
 
-GLOBAL OPTIONS:
-   {{range $index, $option := .VisibleFlags}}{{if $index}}
-   {{end}}{{wrap $option.String 6}}{{end}}{{end}}{{end}}{{if .Copyright}}
+GLOBAL OPTIONS:{{template "visibleFlagTemplate" .}}{{end}}{{if .Copyright}}
 
 COPYRIGHT:
-   {{wrap .Copyright 3}}{{end}}
+   {{template "copyrightTemplate" .}}{{end}}
 `
     AppHelpTemplate is the text template for the Default help topic. cli.go
     uses text/template to render templates. You can render custom help text by
     setting this variable.
 
 var CommandHelpTemplate = `NAME:
-   {{$v := offset .HelpName 6}}{{wrap .HelpName 3}}{{if .Usage}} - {{wrap .Usage $v}}{{end}}
+   {{template "helpNameTemplate" .}}
 
 USAGE:
-   {{if .UsageText}}{{wrap .UsageText 3}}{{else}}{{.HelpName}}{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}{{if .Category}}
+   {{template "usageTemplate" .}}{{if .Category}}
 
 CATEGORY:
    {{.Category}}{{end}}{{if .Description}}
 
 DESCRIPTION:
-   {{wrap .Description 3}}{{end}}{{if .VisibleFlagCategories}}
+   {{template "descriptionTemplate" .}}{{end}}{{if .VisibleFlagCategories}}
 
-OPTIONS:{{range .VisibleFlagCategories}}
-   {{if .Name}}{{.Name}}
-   {{end}}{{range .Flags}}{{.}}
-   {{end}}{{end}}{{else}}{{if .VisibleFlags}}
+OPTIONS:{{template "visibleFlagCategoryTemplate" .}}{{else if .VisibleFlags}}
 
-OPTIONS:
-   {{range .VisibleFlags}}{{.}}
-   {{end}}{{end}}{{end}}
-`
+OPTIONS:{{template "visibleFlagTemplate" .}}{{end}}`
     CommandHelpTemplate is the text template for the command help topic. cli.go
     uses text/template to render templates. You can render custom help text by
     setting this variable.
@@ -147,23 +132,19 @@ var OsExiter = os.Exit
     os.Exit.
 
 var SubcommandHelpTemplate = `NAME:
-   {{.HelpName}} - {{.Usage}}
+   {{template "helpNameTemplate" .}}
 
 USAGE:
    {{if .UsageText}}{{wrap .UsageText 3}}{{else}}{{.HelpName}} command{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}{{if .Description}}
 
 DESCRIPTION:
-   {{wrap .Description 3}}{{end}}
+   {{template "descriptionTemplate" .}}{{end}}{{if .VisibleCommands}}
 
-COMMANDS:{{range .VisibleCategories}}{{if .Name}}
-   {{.Name}}:{{range .VisibleCommands}}
-     {{join .Names ", "}}{{"\t"}}{{.Usage}}{{end}}{{else}}{{ $cv := offsetCommands .VisibleCommands 5}}{{range .VisibleCommands}}
-     {{$s := join .Names ", "}}{{$s}}{{ $sp := subtract $cv (offset $s 3) }}{{ indent $sp ""}}{{wrap .Usage $cv}}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
+COMMANDS:{{template "visibleCommandTemplate" .}}{{end}}{{if .VisibleFlagCategories}}
 
-OPTIONS:
-   {{range .VisibleFlags}}{{.}}
-   {{end}}{{end}}
-`
+OPTIONS:{{template "visibleFlagCategoryTemplate" .}}{{else if .VisibleFlags}}
+
+OPTIONS:{{template "visibleFlagTemplate" .}}{{end}}`
     SubcommandHelpTemplate is the text template for the subcommand help topic.
     cli.go uses text/template to render templates. You can render custom help
     text by setting this variable.
@@ -249,6 +230,13 @@ TYPES
 
 type ActionFunc func(*Context) error
     ActionFunc is the action to execute when no subcommands are specified
+
+type ActionableFlag interface {
+	Flag
+	RunAction(*Context) error
+}
+    ActionableFlag is an interface that wraps Flag interface and RunAction
+    operation.
 
 type AfterFunc func(*Context) error
     AfterFunc is an action to execute after any subcommands are run, but after
@@ -454,6 +442,8 @@ type BoolFlag struct {
 	EnvVars []string
 
 	Count *int
+
+	Action func(*Context, bool) error
 }
     BoolFlag is a flag with type bool
 
@@ -490,6 +480,9 @@ func (f *BoolFlag) IsVisible() bool
 
 func (f *BoolFlag) Names() []string
     Names returns the names of the flag
+
+func (f *BoolFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *BoolFlag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -575,6 +568,9 @@ func (c *Command) Names() []string
 func (c *Command) Run(ctx *Context) (err error)
     Run invokes the command given the context, parses ctx.Args() to generate
     command-specific flags
+
+func (c *Command) VisibleCommands() []*Command
+    VisibleCommands returns a slice of the Commands with Hidden=false
 
 func (c *Command) VisibleFlagCategories() []VisibleFlagCategory
     VisibleFlagCategories returns a slice containing all the visible flag
@@ -744,6 +740,14 @@ type DocGenerationFlag interface {
     DocGenerationFlag is an interface that allows documentation generation for
     the flag
 
+type DocGenerationSliceFlag interface {
+	DocGenerationFlag
+
+	// IsSliceFlag returns true for flags that can be given multiple times.
+	IsSliceFlag() bool
+}
+    DocGenerationSliceFlag extends DocGenerationFlag for slice-based flags.
+
 type DurationFlag struct {
 	Name string
 
@@ -761,6 +765,8 @@ type DurationFlag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, time.Duration) error
 }
     DurationFlag is a flag with type time.Duration
 
@@ -797,6 +803,9 @@ func (f *DurationFlag) IsVisible() bool
 
 func (f *DurationFlag) Names() []string
     Names returns the names of the flag
+
+func (f *DurationFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *DurationFlag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -934,6 +943,8 @@ type Float64Flag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, float64) error
 }
     Float64Flag is a flag with type float64
 
@@ -970,6 +981,9 @@ func (f *Float64Flag) IsVisible() bool
 
 func (f *Float64Flag) Names() []string
     Names returns the names of the flag
+
+func (f *Float64Flag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *Float64Flag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -1017,6 +1031,8 @@ type Float64SliceFlag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, []float64) error
 }
     Float64SliceFlag is a flag with type *Float64Slice
 
@@ -1050,11 +1066,17 @@ func (f *Float64SliceFlag) IsRequired() bool
 func (f *Float64SliceFlag) IsSet() bool
     IsSet returns whether or not the flag has been set through env or file
 
+func (f *Float64SliceFlag) IsSliceFlag() bool
+    IsSliceFlag implements DocGenerationSliceFlag.
+
 func (f *Float64SliceFlag) IsVisible() bool
     IsVisible returns true if the flag is not hidden, otherwise false
 
 func (f *Float64SliceFlag) Names() []string
     Names returns the names of the flag
+
+func (f *Float64SliceFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *Float64SliceFlag) SetDestination(slice []float64)
 
@@ -1091,6 +1113,8 @@ type GenericFlag struct {
 	EnvVars []string
 
 	TakesFile bool
+
+	Action func(*Context, interface{}) error
 }
     GenericFlag is a flag with type Generic
 
@@ -1129,6 +1153,9 @@ func (f *GenericFlag) IsVisible() bool
 func (f *GenericFlag) Names() []string
     Names returns the names of the flag
 
+func (f *GenericFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
+
 func (f *GenericFlag) String() string
     String returns a readable representation of this value (for usage defaults)
 
@@ -1154,6 +1181,8 @@ type Int64Flag struct {
 	EnvVars []string
 
 	Base int
+
+	Action func(*Context, int64) error
 }
     Int64Flag is a flag with type int64
 
@@ -1190,6 +1219,9 @@ func (f *Int64Flag) IsVisible() bool
 
 func (f *Int64Flag) Names() []string
     Names returns the names of the flag
+
+func (f *Int64Flag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *Int64Flag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -1237,6 +1269,8 @@ type Int64SliceFlag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, []int64) error
 }
     Int64SliceFlag is a flag with type *Int64Slice
 
@@ -1270,11 +1304,17 @@ func (f *Int64SliceFlag) IsRequired() bool
 func (f *Int64SliceFlag) IsSet() bool
     IsSet returns whether or not the flag has been set through env or file
 
+func (f *Int64SliceFlag) IsSliceFlag() bool
+    IsSliceFlag implements DocGenerationSliceFlag.
+
 func (f *Int64SliceFlag) IsVisible() bool
     IsVisible returns true if the flag is not hidden, otherwise false
 
 func (f *Int64SliceFlag) Names() []string
     Names returns the names of the flag
+
+func (f *Int64SliceFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *Int64SliceFlag) SetDestination(slice []int64)
 
@@ -1305,6 +1345,8 @@ type IntFlag struct {
 	EnvVars []string
 
 	Base int
+
+	Action func(*Context, int) error
 }
     IntFlag is a flag with type int
 
@@ -1341,6 +1383,9 @@ func (f *IntFlag) IsVisible() bool
 
 func (f *IntFlag) Names() []string
     Names returns the names of the flag
+
+func (f *IntFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *IntFlag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -1392,6 +1437,8 @@ type IntSliceFlag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, []int) error
 }
     IntSliceFlag is a flag with type *IntSlice
 
@@ -1425,11 +1472,17 @@ func (f *IntSliceFlag) IsRequired() bool
 func (f *IntSliceFlag) IsSet() bool
     IsSet returns whether or not the flag has been set through env or file
 
+func (f *IntSliceFlag) IsSliceFlag() bool
+    IsSliceFlag implements DocGenerationSliceFlag.
+
 func (f *IntSliceFlag) IsVisible() bool
     IsVisible returns true if the flag is not hidden, otherwise false
 
 func (f *IntSliceFlag) Names() []string
     Names returns the names of the flag
+
+func (f *IntSliceFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *IntSliceFlag) SetDestination(slice []int)
 
@@ -1494,6 +1547,8 @@ type PathFlag struct {
 	EnvVars []string
 
 	TakesFile bool
+
+	Action func(*Context, Path) error
 }
     PathFlag is a flag with type Path
 
@@ -1530,6 +1585,9 @@ func (f *PathFlag) IsVisible() bool
 
 func (f *PathFlag) Names() []string
     Names returns the names of the flag
+
+func (f *PathFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *PathFlag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -1631,6 +1689,8 @@ type StringFlag struct {
 	EnvVars []string
 
 	TakesFile bool
+
+	Action func(*Context, string) error
 }
     StringFlag is a flag with type string
 
@@ -1667,6 +1727,9 @@ func (f *StringFlag) IsVisible() bool
 
 func (f *StringFlag) Names() []string
     Names returns the names of the flag
+
+func (f *StringFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *StringFlag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -1716,6 +1779,8 @@ type StringSliceFlag struct {
 	EnvVars []string
 
 	TakesFile bool
+
+	Action func(*Context, []string) error
 }
     StringSliceFlag is a flag with type *StringSlice
 
@@ -1749,11 +1814,17 @@ func (f *StringSliceFlag) IsRequired() bool
 func (f *StringSliceFlag) IsSet() bool
     IsSet returns whether or not the flag has been set through env or file
 
+func (f *StringSliceFlag) IsSliceFlag() bool
+    IsSliceFlag implements DocGenerationSliceFlag.
+
 func (f *StringSliceFlag) IsVisible() bool
     IsVisible returns true if the flag is not hidden, otherwise false
 
 func (f *StringSliceFlag) Names() []string
     Names returns the names of the flag
+
+func (f *StringSliceFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *StringSliceFlag) SetDestination(slice []string)
 
@@ -1819,6 +1890,8 @@ type TimestampFlag struct {
 	Layout string
 
 	Timezone *time.Location
+
+	Action func(*Context, *time.Time) error
 }
     TimestampFlag is a flag with type *Timestamp
 
@@ -1856,6 +1929,9 @@ func (f *TimestampFlag) IsVisible() bool
 func (f *TimestampFlag) Names() []string
     Names returns the names of the flag
 
+func (f *TimestampFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
+
 func (f *TimestampFlag) String() string
     String returns a readable representation of this value (for usage defaults)
 
@@ -1881,6 +1957,8 @@ type Uint64Flag struct {
 	EnvVars []string
 
 	Base int
+
+	Action func(*Context, uint64) error
 }
     Uint64Flag is a flag with type uint64
 
@@ -1917,6 +1995,9 @@ func (f *Uint64Flag) IsVisible() bool
 
 func (f *Uint64Flag) Names() []string
     Names returns the names of the flag
+
+func (f *Uint64Flag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *Uint64Flag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -1964,6 +2045,8 @@ type Uint64SliceFlag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, []uint64) error
 }
     Uint64SliceFlag is a flag with type *Uint64Slice
 
@@ -1994,6 +2077,9 @@ func (f *Uint64SliceFlag) IsRequired() bool
 
 func (f *Uint64SliceFlag) IsSet() bool
     IsSet returns whether or not the flag has been set through env or file
+
+func (f *Uint64SliceFlag) IsSliceFlag() bool
+    IsSliceFlag implements DocGenerationSliceFlag.
 
 func (f *Uint64SliceFlag) IsVisible() bool
     IsVisible returns true if the flag is not hidden, otherwise false
@@ -2026,6 +2112,8 @@ type UintFlag struct {
 	EnvVars []string
 
 	Base int
+
+	Action func(*Context, uint) error
 }
     UintFlag is a flag with type uint
 
@@ -2062,6 +2150,9 @@ func (f *UintFlag) IsVisible() bool
 
 func (f *UintFlag) Names() []string
     Names returns the names of the flag
+
+func (f *UintFlag) RunAction(c *Context) error
+    RunAction executes flag action if set
 
 func (f *UintFlag) String() string
     String returns a readable representation of this value (for usage defaults)
@@ -2113,6 +2204,8 @@ type UintSliceFlag struct {
 
 	Aliases []string
 	EnvVars []string
+
+	Action func(*Context, []uint) error
 }
     UintSliceFlag is a flag with type *UintSlice
 
@@ -2143,6 +2236,9 @@ func (f *UintSliceFlag) IsRequired() bool
 
 func (f *UintSliceFlag) IsSet() bool
     IsSet returns whether or not the flag has been set through env or file
+
+func (f *UintSliceFlag) IsSliceFlag() bool
+    IsSliceFlag implements DocGenerationSliceFlag.
 
 func (f *UintSliceFlag) IsVisible() bool
     IsVisible returns true if the flag is not hidden, otherwise false
