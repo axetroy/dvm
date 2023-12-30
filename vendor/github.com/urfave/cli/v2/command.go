@@ -20,6 +20,8 @@ type Command struct {
 	UsageText string
 	// A longer explanation of how the command works
 	Description string
+	// Whether this command supports arguments
+	Args bool
 	// A short description of the arguments of this command
 	ArgsUsage string
 	// The category the command is part of
@@ -69,6 +71,8 @@ type Command struct {
 
 	// if this is a root "special" command
 	isRoot bool
+
+	separator separatorSpec
 }
 
 type Commands []*Command
@@ -133,26 +137,30 @@ func (c *Command) setup(ctx *Context) {
 		if scmd.HelpName == "" {
 			scmd.HelpName = fmt.Sprintf("%s %s", c.HelpName, scmd.Name)
 		}
+		scmd.separator = c.separator
 		newCmds = append(newCmds, scmd)
 	}
 	c.Subcommands = newCmds
+
+	if c.BashComplete == nil {
+		c.BashComplete = DefaultCompleteWithFlags(c)
+	}
 }
 
 func (c *Command) Run(cCtx *Context, arguments ...string) (err error) {
 
 	if !c.isRoot {
 		c.setup(cCtx)
+		if err := checkDuplicatedCmds(c); err != nil {
+			return err
+		}
 	}
 
 	a := args(arguments)
 	set, err := c.parseFlags(&a, cCtx.shellComplete)
 	cCtx.flagSet = set
 
-	if c.isRoot {
-		if checkCompletions(cCtx) {
-			return nil
-		}
-	} else if checkCommandCompletions(cCtx, c.Name) {
+	if checkCompletions(cCtx) {
 		return nil
 	}
 
@@ -203,7 +211,7 @@ func (c *Command) Run(cCtx *Context, arguments ...string) (err error) {
 
 	cerr := cCtx.checkRequiredFlags(c.Flags)
 	if cerr != nil {
-		_ = ShowSubcommandHelp(cCtx)
+		_ = helpCommand.Action(cCtx)
 		return cerr
 	}
 
@@ -275,7 +283,7 @@ func (c *Command) Run(cCtx *Context, arguments ...string) (err error) {
 }
 
 func (c *Command) newFlagSet() (*flag.FlagSet, error) {
-	return flagSet(c.Name, c.Flags)
+	return flagSet(c.Name, c.Flags, c.separator)
 }
 
 func (c *Command) useShortOptionHandling() bool {
@@ -400,4 +408,17 @@ func hasCommand(commands []*Command, command *Command) bool {
 	}
 
 	return false
+}
+
+func checkDuplicatedCmds(parent *Command) error {
+	seen := make(map[string]struct{})
+	for _, c := range parent.Subcommands {
+		for _, name := range c.Names() {
+			if _, exists := seen[name]; exists {
+				return fmt.Errorf("parent command [%s] has duplicated subcommand name or alias: %s", parent.Name, name)
+			}
+			seen[name] = struct{}{}
+		}
+	}
+	return nil
 }

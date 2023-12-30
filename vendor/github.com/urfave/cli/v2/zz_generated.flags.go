@@ -23,7 +23,10 @@ type Float64SliceFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *Float64Slice
+	defaultValue    *Float64Slice
+	defaultValueSet bool
+
+	separator separatorSpec
 
 	Action func(*Context, []float64) error
 }
@@ -67,7 +70,8 @@ type GenericFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue Generic
+	defaultValue    Generic
+	defaultValueSet bool
 
 	TakesFile bool
 
@@ -118,7 +122,10 @@ type Int64SliceFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *Int64Slice
+	defaultValue    *Int64Slice
+	defaultValueSet bool
+
+	separator separatorSpec
 
 	Action func(*Context, []int64) error
 }
@@ -162,7 +169,10 @@ type IntSliceFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *IntSlice
+	defaultValue    *IntSlice
+	defaultValueSet bool
+
+	separator separatorSpec
 
 	Action func(*Context, []int) error
 }
@@ -206,7 +216,8 @@ type PathFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue Path
+	defaultValue    Path
+	defaultValueSet bool
 
 	TakesFile bool
 
@@ -257,11 +268,16 @@ type StringSliceFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *StringSlice
+	defaultValue    *StringSlice
+	defaultValueSet bool
+
+	separator separatorSpec
 
 	TakesFile bool
 
 	Action func(*Context, []string) error
+
+	KeepSpace bool
 }
 
 // IsSet returns whether or not the flag has been set through env or file
@@ -303,7 +319,8 @@ type TimestampFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *Timestamp
+	defaultValue    *Timestamp
+	defaultValueSet bool
 
 	Layout string
 
@@ -356,7 +373,10 @@ type Uint64SliceFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *Uint64Slice
+	defaultValue    *Uint64Slice
+	defaultValueSet bool
+
+	separator separatorSpec
 
 	Action func(*Context, []uint64) error
 }
@@ -400,7 +420,10 @@ type UintSliceFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue *UintSlice
+	defaultValue    *UintSlice
+	defaultValueSet bool
+
+	separator separatorSpec
 
 	Action func(*Context, []uint) error
 }
@@ -444,9 +467,12 @@ type BoolFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue bool
+	defaultValue    bool
+	defaultValueSet bool
 
 	Count *int
+
+	DisableDefaultText bool
 
 	Action func(*Context, bool) error
 }
@@ -495,7 +521,8 @@ type Float64Flag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue float64
+	defaultValue    float64
+	defaultValueSet bool
 
 	Action func(*Context, float64) error
 }
@@ -544,7 +571,8 @@ type IntFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue int
+	defaultValue    int
+	defaultValueSet bool
 
 	Base int
 
@@ -595,7 +623,8 @@ type Int64Flag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue int64
+	defaultValue    int64
+	defaultValueSet bool
 
 	Base int
 
@@ -646,7 +675,8 @@ type StringFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue string
+	defaultValue    string
+	defaultValueSet bool
 
 	TakesFile bool
 
@@ -697,7 +727,8 @@ type DurationFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue time.Duration
+	defaultValue    time.Duration
+	defaultValueSet bool
 
 	Action func(*Context, time.Duration) error
 }
@@ -746,7 +777,8 @@ type UintFlag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue uint
+	defaultValue    uint
+	defaultValueSet bool
 
 	Base int
 
@@ -797,7 +829,8 @@ type Uint64Flag struct {
 	Aliases []string
 	EnvVars []string
 
-	defaultValue uint64
+	defaultValue    uint64
+	defaultValueSet bool
 
 	Base int
 
